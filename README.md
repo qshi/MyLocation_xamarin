@@ -1,4 +1,4 @@
-# My Location - Connect with your consumers
+# My Location - Indoor/Outdoor location information gathering system
 
 
 ## User Application
@@ -21,13 +21,13 @@ In addition to the consumer application that you can release into the app stores
 * Call back consumers with a single click
 
 
-1.	Objective
+##1.	Objective
 The goal is to design an iPhone application to help people get to know landmarks position  information indoors/outdoors accurately combining GPS and Bluetooth localization. The application development includes building a real-time data updating system based on Azure including online report and offline information verification & update.  
-2.	Assumptions
+##2.	Assumptions
 Users use the My Location App to localize themselves, get landmarks alert and Report the missing landmarks location.
 Administrator use Location Admin App to review all the reports, verify information onsite and install iBeacons around the reported zone.
 
-3.	Landmarksà User report
+##3.	Landmarks: User report
 a)	Work zone
 b)	Traffic signal
 c)	Round about
@@ -36,9 +36,9 @@ e)	Bus station
 f)	Buildings entrance 
 
 
-4.	System Architecture
+##4.	System Architecture
  
-5.	Implementation
+##5.	Implementation
 (1)	User Application
 There are three functions in the user application: My Location, Report, Landmarks Position (verified).
 My Location: Provide location and navigation service for users
@@ -63,7 +63,7 @@ Manage Location: After verifying the landmarks location admin can install ibeaco
  		 
 	
 
-6.	Future work
+##6.	Future work
 Positioning and notification method
 
 1. BLE deployment: Region Boundary definition
