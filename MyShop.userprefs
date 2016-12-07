@@ -1,0 +1,42 @@
+﻿<Properties StartupConfiguration="{922B72BE-8B10-4B52-8D48-881853B15028}|Default">
+  <MonoDevelop.Ide.ItemProperties.MyShop.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.303A364C-DF83-4C6A-B5F2-B4E196174BD9" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MyShop/stores.json">
+    <Files>
+      <File FileName="MyShop/Views/FeedbackPage.xaml" Line="211" Column="1" />
+      <File FileName="MyShop/Views/FeedbackPage.xaml.cs" Line="62" Column="1" />
+      <File FileName="MyShop/Views/HomePage.xaml" Line="52" Column="1" />
+      <File FileName="MyShop/Views/HomePage.xaml.cs" Line="40" Column="1" />
+      <File FileName="MyShop/Views/StorePage.xaml" Line="243" Column="1" />
+      <File FileName="MyShop/Views/StorePage.xaml.cs" Line="40" Column="1" />
+      <File FileName="MyShop/Views/StoresPage.xaml" Line="30" Column="31" />
+      <File FileName="MyShop/Views/StoresPage.xaml.cs" Line="1" Column="1" />
+      <File FileName="MyShop/Views/PositionPage.cs" Line="20" Column="1" />
+      <File FileName="MyShop/Views/SelectPositionPage.cs" Line="56" Column="1" />
+      <File FileName="MyShop.iOS/Renderers/MapPageRenderer.cs" Line="24" Column="29" />
+      <File FileName="MyShop.iOS/Renderers/MyPositionPageRenderer.cs" Line="13" Column="23" />
+      <File FileName="MyShop/Services/AzureDataStore.cs" Line="22" Column="3" />
+      <File FileName="MyShop/stores.json" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="MyShop" expanded="True">
+            <Node name="MyShop" expanded="True">
+              <Node name="Services" expanded="True" />
+              <Node name="stores.json" selected="True" />
+            </Node>
+            <Node name="MyShop.Android" expanded="True" />
+            <Node name="MyShop.iOS" expanded="True">
+              <Node name="References" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
