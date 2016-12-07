@@ -11,8 +11,8 @@ namespace MyShop
 
 
 		[Microsoft.WindowsAzure.MobileServices.Version]
-		public string Version { get; set; } = string.Empty; // specific des  bus stop sign   north entrance(building) workzone nothcorner
-		public int LandmarksType { get; set; } = 0;
+		public string Version { get; set; } = string.Empty; 
+		public int LandmarksType { get; set; } = 0;  //specific des  bus stop sign   north entrance(building) workzone nothcorner
 		public string Landmarks { get; set; } = string.Empty;
 		public string Name { get; set; } = string.Empty;    // UUID
 
@@ -23,10 +23,11 @@ namespace MyShop
 		public string StreetAddress { get; set; } = string.Empty; //street info & direction
 		public string City { get; set; } = string.Empty;
 		public string State { get; set; } = string.Empty;
-		public string Country { get; set; } = string.Empty;
-		public string ZipCode { get; set; } = string.Empty;
+		public string Country { get; set; } = string.Empty;   //Range
+		public string ZipCode { get; set; } = string.Empty; 
 		public string Image { get; set; } = string.Empty;
-		//public string Description { get; set; } = string.Empty;
+
+		//public string Description { get; set; } = string.Empty; 
 
 		[JsonIgnore]
 		public Uri ImageUri

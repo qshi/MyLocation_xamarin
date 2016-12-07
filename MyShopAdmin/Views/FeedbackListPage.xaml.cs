@@ -9,13 +9,26 @@ namespace MyShopAdmin
 	public partial class FeedbackListPage : ContentPage
 	{
 		FeedbackListViewModel viewModel;
-		public FeedbackListPage ()
+		public FeedbackListPage()
 		{
-			InitializeComponent ();
-			BindingContext = viewModel = new FeedbackListViewModel (this);
-			FeedbackList.ItemSelected += async (sender, e) => 
+			InitializeComponent();
+			BindingContext = viewModel = new FeedbackListViewModel(this);
+
+			ToolbarItems.Add(new ToolbarItem
 			{
-				if(FeedbackList.SelectedItem == null)
+				Text = "Map",
+				Command = new Command(async (obj) =>
+					{
+						var selectpos = new FeedBackMapPage(viewModel);
+						await Navigation.PushAsync(selectpos);
+
+					})
+
+			});
+
+			FeedbackList.ItemSelected += async (sender, e) =>
+			{
+				if (FeedbackList.SelectedItem == null)
 					return;
 
 
@@ -25,25 +38,26 @@ namespace MyShopAdmin
 			};
 		}
 
-		protected override void OnAppearing ()
+		protected override void OnAppearing()
 		{
-			base.OnAppearing ();
+			base.OnAppearing();
 
 
-			if(viewModel.Feedbacks.Count == 0)	
-				viewModel.GetFeedbackCommand.Execute (null);
+			if (viewModel.Feedbacks.Count == 0)
+				viewModel.GetFeedbackCommand.Execute(null);
 
 
 		}
 
-		public async void OnDelete (object sender, EventArgs e) {
+		public async void OnDelete(object sender, EventArgs e)
+		{
 			var mi = ((MenuItem)sender);
 
-			var result = await DisplayAlert ("Delete?", "Are you sure you want to remove this feedback?", "Yes", "No");
-            if (result)
-            {
-                await viewModel.DeleteFeedback(mi.CommandParameter as Feedback);
-            }
+			var result = await DisplayAlert("Delete?", "Are you sure you want to remove this feedback?", "Yes", "No");
+			if (result)
+			{
+				await viewModel.DeleteFeedback(mi.CommandParameter as Feedback);
+			}
 		}
 	}
 }

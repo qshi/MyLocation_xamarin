@@ -224,11 +224,21 @@
     <Reference Include="Google.Maps">
       <HintPath>..\packages\Xamarin.Google.iOS.Maps.2.1.0\lib\Xamarin.iOS10\Google.Maps.dll</HintPath>
     </Reference>
+    <Reference Include="C5">
+      <HintPath>..\packages\C5.2.4.5947.17249\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\C5.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\packages\MathNet.Numerics.3.19.0\lib\portable-net45+netcore45+MonoAndroid1+MonoTouch1\MathNet.Numerics.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyShop\MyShop.csproj">
       <Project>{B9A7FA37-E8D6-480B-AB8C-878C33E2D300}</Project>
       <Name>MyShop</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyShopAdmin\MyShopAdmin.csproj">
+      <Project>{1866AD0C-DECC-463F-8FE0-13225A1B0017}</Project>
+      <Name>MyShopAdmin</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -249,6 +259,7 @@
     <BundleResource Include="Resources\phone%402x.png" />
     <BundleResource Include="Resources\phone%403x.png" />
     <BundleResource Include="Resources\umassnavi.jpg" />
+    <BundleResource Include="Resources\beacon_linearnie.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -264,6 +275,17 @@
     <Compile Include="Renderers\ViewCellRenderer.cs" />
     <Compile Include="Renderers\MapPageRenderer.cs" />
     <Compile Include="Renderers\MyPositionPageRenderer.cs" />
+    <Compile Include="BLE\BeaconRecieverManager_IOS.cs" />
+    <Compile Include="BLE\IBeaconReciever.cs" />
+    <Compile Include="Helper\GBeaconHelper.cs" />
+    <Compile Include="Models\GBeacon.cs" />
+    <Compile Include="Renderers\GoogleGeoCodeResponse.cs" />
+    <Compile Include="Renderers\ResultsTableSource.cs" />
+    <Compile Include="Renderers\GooglePlace.cs" />
+    <Compile Include="Renderers\LocationPredictions.cs" />
+    <Compile Include="Renderers\Prediction.cs" />
+    <Compile Include="Renderers\MapDelegate.cs" />
+    <Compile Include="Renderers\LocalizationCaculation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -292,6 +314,10 @@
     </XamarinComponentReference>
     <XamarinComponentReference Include="googleiosmaps">
       <Version>2.1.0.0</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="json.net">
+      <Version>7.0.1</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>

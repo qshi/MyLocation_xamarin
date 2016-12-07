@@ -1,0 +1,41 @@
+﻿<Properties StartupConfiguration="{B09D4948-3CF2-4F34-B83B-186B28E116B2}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../../../MyShop.iOS/Renderers/MyPositionPageRenderer.cs">
+    <Files>
+      <File FileName="../../../../MyShop.iOS/Renderers/MyPositionPageRenderer.cs" Line="102" Column="32" />
+      <File FileName="../../../../MyShop.iOS/Renderers/GoogleGeoCodeResponse.cs" Line="1" Column="1" />
+      <File FileName="../../../../../../Dropbox/Thesis/Xamarin/GoogleMapsDirections-master/GoogleMapsDirections/GoogleMapsDirections/MyViewController.cs" Line="65" Column="45" />
+      <File FileName="SampleViewController.cs" Line="7" Column="1" />
+      <File FileName="../../../../MyShop.iOS/AppDelegate.cs" Line="1" Column="1" />
+      <File FileName="../../../../MyShop/Services/AzureDataStore.cs" Line="106" Column="41" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Json.NET.iOS.Sample" expanded="True">
+            <Node name="Json.NET.iOS.Sample" expanded="True" />
+          </Node>
+          <Node name="MyShop" expanded="True">
+            <Node name="MyShop" expanded="True">
+              <Node name="Services" expanded="True" />
+              <Node name="Views" expanded="True">
+                <Node name="StoresPage.xaml" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="MyShop.iOS" expanded="True">
+              <Node name="ComponentReferenceFolder" expanded="True" />
+              <Node name="Renderers" expanded="True">
+                <Node name="MyPositionPageRenderer.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Json.NET.iOS.Sample PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.1E5D0924-21ED-45DF-9182-0FFE01D67C01" />
+</Properties>

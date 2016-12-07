@@ -29,7 +29,7 @@ namespace MyShop.Services
             var emailTask = MessagingPlugin.EmailMessenger;
             if (emailTask.CanSendEmail)
             {
-                emailTask.SendEmail("james.montemagno@xamarin.com", "My Shop Feedback", feedback.ToString());
+                emailTask.SendEmail("quanshi9311@gmail.com", "My Shop Feedback", feedback.ToString());
             }
 
             return await Task.Run(() => { return feedback; });

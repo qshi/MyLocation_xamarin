@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="MyShop.HomePage"
+	Title="{Binding Title}"
+	IsBusy="{Binding IsBusy}">
+	<ContentPage.Content Padding="0">
+		<Grid RowSpacing="0" ColumnSpacing="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+
+      <Image
+                x:Name="HeroImage"
+                Grid.ColumnSpan="3"
+				Source="umassnavi.jpg"
+                Aspect="AspectFill"
+				HorizontalOptions="FillAndExpand"
+				VerticalOptions ="FillAndExpand"/>
+			<Button 
+				x:Name="ButtonFindStore"
+				Grid.Row="1"
+				BackgroundColor="#3498DB"
+				BorderRadius="0"
+				TextColor="White" 
+				Text="Landmarks"/>
+			<Button 
+				x:Name="ButtonLeaveFeedback"
+				Grid.Row="1"
+				Grid.Column="1"
+				BackgroundColor="#81C134" 
+				BorderRadius="0"
+				TextColor="White"
+				Text="Report"/>
+			<Button 
+				x:Name="MyPosition"
+				Grid.Row="1"
+				Grid.Column="2"
+				BackgroundColor="#673111" 
+				BorderRadius="0"
+				TextColor="White"
+				Text="Position"/>
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

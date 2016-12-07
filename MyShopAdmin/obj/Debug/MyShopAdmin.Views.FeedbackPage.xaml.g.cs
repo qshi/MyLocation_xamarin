@@ -9,28 +9,22 @@
 // ------------------------------------------------------------------------------
 
 namespace MyShopAdmin.Views {
-    using System;
-    using Xamarin.Forms;
-    using Xamarin.Forms.Xaml;
     
     
+    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin/Views/FeedbackPage.xaml")]
     public partial class FeedbackPage : global::Xamarin.Forms.ContentPage {
         
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private global::Xamarin.Forms.Picker PickerServiceType;
         
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
-        private global::Xamarin.Forms.Picker PickerRating;
-        
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private global::Xamarin.Forms.Button ButtonCall;
         
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private void InitializeComponent() {
-            this.LoadFromXaml(typeof(FeedbackPage));
-            PickerServiceType = this.FindByName <global::Xamarin.Forms.Picker>("PickerServiceType");
-            PickerRating = this.FindByName <global::Xamarin.Forms.Picker>("PickerRating");
-            ButtonCall = this.FindByName <global::Xamarin.Forms.Button>("ButtonCall");
+            global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(FeedbackPage));
+            PickerServiceType = global::Xamarin.Forms.NameScopeExtensions.FindByName <global::Xamarin.Forms.Picker>(this, "PickerServiceType");
+            ButtonCall = global::Xamarin.Forms.NameScopeExtensions.FindByName <global::Xamarin.Forms.Button>(this, "ButtonCall");
         }
     }
 }

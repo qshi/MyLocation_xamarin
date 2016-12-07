@@ -2,17 +2,17 @@
 <Paths>
   <Jars></Jars>
   <ResolvedResourceDirectories>
-    <ResolvedResourceDirectory>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/ImageCircle.Forms.Plugin.Android/library_project_imports/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Microsoft.WindowsAzure.Mobile.Ext/library_project_imports/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/PCLStorage/library_project_imports/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.Connectivity/library_project_imports/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.ExternalMaps/library_project_imports/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.Messaging/library_project_imports/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.Settings/library_project_imports/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/SQLitePCL.Ext/library_project_imports/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Xamarin.Forms.Maps.Android/library_project_imports/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Xamarin.Forms.Platform/library_project_imports/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Xamarin.Forms.Platform.Android/library_project_imports/res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/ImageCircle.Forms.Plugin.Android/library_project_imports/res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Microsoft.WindowsAzure.Mobile.Ext/library_project_imports/res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/PCLStorage/library_project_imports/res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.Connectivity/library_project_imports/res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.ExternalMaps/library_project_imports/res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.Messaging/library_project_imports/res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.Settings/library_project_imports/res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/SQLitePCL.Ext/library_project_imports/res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Xamarin.Forms.Maps.Android/library_project_imports/res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Xamarin.Forms.Platform/library_project_imports/res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Xamarin.Forms.Platform.Android/library_project_imports/res</ResolvedResourceDirectory>
   </ResolvedResourceDirectories>
   <ResolvedAssetDirectories>
     <ResolvedAssetDirectory>obj/Debug/__library_projects__/ImageCircle.Forms.Plugin.Android/library_project_imports/assets</ResolvedAssetDirectory>
@@ -29,16 +29,16 @@
   </ResolvedAssetDirectories>
   <ResolvedEnvironmentFiles />
   <ResolvedResourceDirectoryStamps>
-    <ResolvedResourceDirectoryStamp>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/ImageCircle.Forms.Plugin.Android.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Microsoft.WindowsAzure.Mobile.Ext.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/PCLStorage.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.Connectivity.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.ExternalMaps.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.Messaging.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.Settings.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/SQLitePCL.Ext.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Xamarin.Forms.Maps.Android.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Xamarin.Forms.Platform.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/shiquan/Dropbox/Thesis/Xamarin/MyShoppe-master 2/MyShopAdmin.Android/obj/Debug/__library_projects__/Xamarin.Forms.Platform.Android.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/ImageCircle.Forms.Plugin.Android.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Microsoft.WindowsAzure.Mobile.Ext.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/PCLStorage.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.Connectivity.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.ExternalMaps.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.Messaging.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Plugin.Settings.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/SQLitePCL.Ext.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Xamarin.Forms.Maps.Android.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Xamarin.Forms.Platform.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>/Users/shiquan/Projects/MyLocation_xamarin/MyShopAdmin.Android/obj/Debug/__library_projects__/Xamarin.Forms.Platform.Android.stamp</ResolvedResourceDirectoryStamp>
   </ResolvedResourceDirectoryStamps>
 </Paths>

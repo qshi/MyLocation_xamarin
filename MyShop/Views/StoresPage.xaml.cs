@@ -7,7 +7,7 @@ namespace MyShop
 {
 	public partial class StoresPage : ContentPage
 	{
-        StoresViewModel viewModel;
+        public StoresViewModel viewModel;
         public Action<Store> ItemSelected
         {
             get { return viewModel.ItemSelected; }
@@ -23,6 +23,18 @@ namespace MyShop
 				//StoreList.IsGroupingEnabled = false;
 				//StoreList.ItemsSource = viewModel.Stores;
 			}
+
+			ToolbarItems.Add(new ToolbarItem
+			{
+				Text = "Map",
+				Command = new Command(async (obj) =>
+					{
+						var selectpos = new PositionPage(viewModel);
+						await Navigation.PushAsync(selectpos);
+
+					})
+
+			});
 		}
 
 		protected override void OnAppearing ()
