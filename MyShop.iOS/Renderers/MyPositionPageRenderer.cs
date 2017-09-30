@@ -104,13 +104,6 @@ namespace MyShop.iOS
 */
 	public class MyPositionPageRenderer : PageRenderer
 	{
-		struct lBLE
-		{
-			public GBeacon ble;
-			public double latti;
-			public double longit;
-		}
-
 		MapView mapView;
 		private MapDelegate mapDelegate;
 		Dictionary<string, Store> landmarkbeacon;
@@ -126,7 +119,7 @@ namespace MyShop.iOS
 		//bool alertshowble = false;
 
 		UITextView instructionview;
-		UITextView testview;
+		//UITextView testview;
 		/* serach box ini */
 		UISearchBar searchBar;
 		UIImageView googleAttribution;
@@ -399,113 +392,9 @@ namespace MyShop.iOS
 			_beaconReciever.BeaconBroadcastEvent -= BeaconRecieverOnBeaconBroadcastEvent;
 			_beaconReciever.Stop();
 		}
+
 		/*
 		public class MapDelegate : MapViewDelegate
-		{
-			//Base URL for Directions Service
-			const string KMdDirectionsUrl = @"http://maps.googleapis.com/maps/api/directions/json?origin=";
-
-			public readonly List<CLLocationCoordinate2D> Locations;
-			private readonly MapView _map;
-			public readonly List<Google.Maps.Polyline> Lines;
-
-			public MapDelegate(MapView map)
-			{
-				Locations = new List<CLLocationCoordinate2D>();
-				Lines = new List<Google.Maps.Polyline>();
-				_map = map;
-			}
-
-			public override void DidTapAtCoordinate(MapView mapView, CLLocationCoordinate2D coordinate)
-			{
-
-				//Create/Add Marker 
-				var marker = new Marker { Position = coordinate, Map = mapView };
-				Locations.Add(coordinate);
-
-				if (Locations.Count > 1)
-				{
-					SetDirectionsQuery();
-				}
-			}
-
-			private async void SetDirectionsQuery()
-			{
-				//Clear Old Polylines
-				if (Lines.Count > 0)
-				{
-					foreach (var line in Lines)
-					{
-						line.Map = null;
-					}
-					Lines.Clear();
-				}
-
-				//Start building Directions URL
-				var sb = new System.Text.StringBuilder();
-				sb.Append(KMdDirectionsUrl);
-				sb.Append(Locations[0].Latitude.ToString(CultureInfo.InvariantCulture));
-				sb.Append(",");
-				sb.Append(Locations[0].Longitude.ToString(CultureInfo.InvariantCulture));
-				sb.Append("&");
-				sb.Append("destination=");
-				sb.Append(Locations[1].Latitude.ToString(CultureInfo.InvariantCulture));
-				sb.Append(",");
-				sb.Append(Locations[1].Longitude.ToString(CultureInfo.InvariantCulture));
-				sb.Append("&sensor=true");
-
-				//If we have more than 2 locations we'll append waypoints
-				if (Locations.Count > 2)
-				{
-					sb.Append("&waypoints=");
-					for (var i = 2; i < Locations.Count; i++)
-					{
-						if (i > 2)
-							sb.Append("|");
-						sb.Append(Locations[i].Latitude.ToString(CultureInfo.InvariantCulture));
-						sb.Append(",");
-						sb.Append(Locations[i].Longitude.ToString(CultureInfo.InvariantCulture));
-					}
-				}
-
-				//Get directions through Google Web Service
-				var directionsTask = GetDirections(sb.ToString());
-
-				var jSonData = await directionsTask;
-
-				//Deserialize string to object
-				var routes = JsonConvert.DeserializeObject<RootObject>(jSonData);
-
-				foreach (var route in routes.routes)
-				{
-					//Encode path from polyline passed back
-					var path = Path.FromEncodedPath(route.overview_polyline.points);
-
-					//Create line from Path
-					var line = Google.Maps.Polyline.FromPath(path);
-					line.StrokeWidth = 10f;
-					line.StrokeColor = UIColor.Red;
-					line.Geodesic = true;
-
-					//Place line on map
-					line.Map = _map;
-					Lines.Add(line);
-
-				}
-
-			}
-
-			private async Task<String> GetDirections(string url)
-			{
-				var client = new WebClient();
-				var directionsTask = client.DownloadStringTaskAsync(url);
-				var directions = await directionsTask;
-
-				return directions;
-
-			}
-
-		}
 		*/
 
 		private void BeaconRecieverOnBeaconBroadcastEvent(object sender, EventArgs eventArgs)
@@ -529,7 +418,7 @@ namespace MyShop.iOS
 		 	var beaconFullId = beacon.Major + "-" + beacon.Minor;
 			var rssi = beacon.Rssi;
 			var timestamp = DateTime.Now.ToString();// set zero
-
+     
 			//string Text = "Please Scan the iBeacons" + "\n" + beaconFullId + ": " + rssi + "dB : " + timestamp;
 			//Console.WriteLine(beaconFullId + ": " + rssi + "dB  ");
 
@@ -567,65 +456,55 @@ namespace MyShop.iOS
 					ReceivedBleAvgRssi.Add(beaconFullId, avgrssi);
 				}
 
-				if (myposition.HorizontalAccuracy > 9)
+				var cur_landmarktype = landmarktypes[landmarkbeacon[beaconFullId].LandmarksType];
+				double avg_rssi = ReceivedBleAvgRssi[beaconFullId];
+				var DistanceMeter = 0.30480000000122 * (Math.Pow(10, (-avg_rssi - 63.5379) / (10 * 2.086)) * 3);
+
+				if (beacon.Proximity == GProximity.Far)
 				{
-					if (rssi > -75)
+					Console.WriteLine(beaconFullId + ": Far BLE!: " + rssi + "dB  ");
+				}
+				if (beacon.Proximity == GProximity.Immediate)
+				{
+					instructionview.Text = "BLE detected that you are at: " + landmarkbeacon[beaconFullId].StreetAddress + " " + cur_landmarktype + "\n";
+					instructionview.Text += "Your heading:" + myheading;
+					//Console.WriteLine(beaconFullId + ": Immediate BLE!: " + rssi + "dB  ");
+				}
+				if (beacon.Proximity == GProximity.Near)
+				{
+					if (positionpage.Landmarks != null)
 					{
-						var landmarktype = landmarktypes[landmarkbeacon[beaconFullId].LandmarksType];
-						instructionview.Text = "BLE detected that you are at: " + landmarkbeacon[beaconFullId].StreetAddress + " " + landmarktype + "\n";
+						CLLocation landmark = new CLLocation(landmarkbeacon[beaconFullId].Latitude, landmarkbeacon[beaconFullId].Longitude);
+						instructionview.Text = "BLE detected that you are close to: " + landmarkbeacon[beaconFullId].StreetAddress + " " + cur_landmarktype + "\n";
+						instructionview.Text += "Distance(meter): " + DistanceMeter.ToString() + "\n";
+						//instructionview.Text += "Direction: " + Direction(mylocation, landmark) + "\n";
 						instructionview.Text += "Your heading:" + myheading;
 					}
-					else if (ReceivedBleAvgRssi.ContainsKey(beaconFullId))
-						BleOutdoorNotif(beaconFullId, myposition);
+					//Console.WriteLine(beaconFullId + ": Near BLE!: " + rssi + "dB  ");
+				}
+				if (beacon.Proximity == GProximity.Unknown)
+				{
+					Console.WriteLine(beaconFullId + ": Unknow BLE!: " + rssi + "dB  ");
+				}
+
+				if (myposition.HorizontalAccuracy > 9)
+				{
+					//if (rssi > -75)
+					//{
+     //                   //
+					//	var landmarktype = landmarktypes[landmarkbeacon[beaconFullId].LandmarksType];
+					//	instructionview.Text = "BLE detected that you are at: " + landmarkbeacon[beaconFullId].StreetAddress + " " + landmarktype + "\n";
+					//	instructionview.Text += "Your heading:" + myheading;
+					//}
+					//else if (ReceivedBleAvgRssi.ContainsKey(beaconFullId))
+						//BleOutdoorNotif(beaconFullId, myposition);
 					
 					indoorlocalization();
 				}
-				
 			}
-
-
-
-			/*
-			if (rssi > -60 && !alertshow)
-			{
-				alertshow = true;
-				UIAlertView alert = new UIAlertView();
-				alert.Title = "Choose this BLE?";
-				alert.Message = "Full ID: "+ beaconFullId;
-				alert.AddButton("Cancel");
-				alert.AddButton("Yes");
-				alert.CancelButtonIndex = 0;
-				alert.Show();
-				alert.Clicked += (object s, UIButtonEventArgs ev) =>
-				{
-					if (ev.ButtonIndex != 0)
-					{
-						if (cur_marker != null)
-						{
-							var localizationble = new lBLE
-							{
-								ble = beacon,
-								latti = cur_marker.Position.Latitude,
-								longit = cur_marker.Position.Longitude
-							};
-						}
-						else 
-						{
-							UIAlertView alerterror = new UIAlertView();
-							alerterror.Title = "No position selected";
-							alerterror.CancelButtonIndex = 0;
-							alerterror.AddButton("Cancel");
-							alerterror.Show();
-						}
-					}
-					alertshow = false;
-				};
-
-			}
-			*/
-
 		}
-		//=============================================================================================
+
+		//=============================================================================================================
 		/*
 		void HandleLongPress(object sender, GMSCoordEventArgs e)
 		{
@@ -839,7 +718,7 @@ namespace MyShop.iOS
 			if (this.locationBias != null)
 				constructedUrl = constructedUrl + locationBias;
 
-			Console.WriteLine(constructedUrl);
+			//Console.WriteLine(constructedUrl);
 			return constructedUrl;
 		}
 		//------------------------------------------------------------------------------------------------------------
@@ -872,7 +751,7 @@ namespace MyShop.iOS
 				//instructionview.Text += "Direction: " + Direction(mylocation, landmark) + "\n";
 				instructionview.Text += "Your heading:" + myheading;
 			}
-			Console.WriteLine("DIS " + DistanceMeter + "full " + fullid + "type " + instructionview.Text);
+			//Console.WriteLine("DIS " + DistanceMeter + "full " + fullid + "type " + instructionview.Text);
 		}
 
 		//------------------------------------------------------------------------------------------------------------

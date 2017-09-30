@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component format="1" id="KontaktSDK">
+  <name>KontaktSDK</name>
+  <publisher>Kontakt.io</publisher>
+  <publisher-url>https://kontakt.io</publisher-url>
+  <version>1.4.4</version>
+  <summary>The Kontakt.io SDK for managing beacons</summary>
+  <samples>
+    <sample id="BeaconManagerSample">
+      <name>Beacon Manager Sample</name>
+      <summary>Beacon Manager Sample</summary>
+    </sample>
+    <sample id="EddystoneManagerSample">
+      <name>Eddystone Manager Sample</name>
+      <summary>Eddystone Manager Sample</summary>
+    </sample>
+    <sample id="DevicesManagerSample">
+      <name>Devices Manager Sample</name>
+      <summary>Devices Manager Sample</summary>
+    </sample>
+    <sample id="ApplyConfigSample">
+      <name>Apply Config Sample</name>
+      <summary>Apply Config Sample</summary>
+    </sample>
+    <sample id="CloudClientSample">
+      <name>Cloud Client Sample</name>
+      <summary>Cloud Client Sample</summary>
+    </sample>
+  </samples>
+</component>

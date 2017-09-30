@@ -62,6 +62,7 @@ namespace MyShop.iOS
 			sb.Append(Locations[1].Latitude.ToString(CultureInfo.InvariantCulture));
 			sb.Append(",");
 			sb.Append(Locations[1].Longitude.ToString(CultureInfo.InvariantCulture));
+            sb.Append("&mode=walking");
 			sb.Append("&sensor=true");
 
 			//If we have more than 2 locations we'll append waypoints

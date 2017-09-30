@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>My Position</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.refractored.myposition</string>
+	<string>com.pikkart.trial</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.2</string>
 	<key>CFBundleVersion</key>

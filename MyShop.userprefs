@@ -1,12 +1,34 @@
-﻿<Properties StartupConfiguration="{064D452F-4426-4ACD-A7C7-AE413CD124AA}|Default">
-  <MonoDevelop.Ide.ItemProperties.MyShop.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.D0622013-1A52-4B49-97DC-4068C53EFFFA" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MyShop.iOS/Renderers/MyPositionPageRenderer.cs">
+﻿<Properties StartupConfiguration="{922B72BE-8B10-4B52-8D48-881853B15028}|Default">
+  <MonoDevelop.Ide.ItemProperties.MyShop.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.9fc28c5f349d151903235c81cf9e3a85e78627c3" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MyShop.iOS/Renderers/LocalizationCaculation.cs">
     <Files>
-      <File FileName="MyShop.iOS/Renderers/MyPositionPageRenderer.cs" Line="454" Column="6" />
+      <File FileName="MyShop.iOS/Renderers/LocalizationCaculation.cs" Line="35" Column="7" />
+      <File FileName="MyShop.iOS/Renderers/MapDelegate.cs" Line="65" Column="37" />
+      <File FileName="MyShop.iOS/Renderers/MyPositionPageRenderer.cs" Line="9" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="MyShop" expanded="True">
+            <Node name="Admin" expanded="True" />
+            <Node name="MyShop.iOS" expanded="True">
+              <Node name="References" expanded="True" />
+              <Node name="ComponentReferenceFolder" expanded="True" />
+              <Node name="BLE" expanded="True" />
+              <Node name="Helper" expanded="True" />
+              <Node name="Helpers" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Renderers" expanded="True">
+                <Node name="LocalizationCaculation.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.MyShop.Android PreferredExecutionTarget="Android.Xamarin_Android_API_15" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" />
   <MonoDevelop.Ide.ItemProperties.Admin.MyShopAdmin.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.86A2916F-5E57-4CDF-861A-417E0CD3471B" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

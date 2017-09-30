@@ -14,8 +14,8 @@
     "Xam.Plugins.Forms.ImageCircle": "1.4.1",
     "Xam.Plugins.Messaging": "3.2.1",
     "Xam.Plugins.Settings": "2.1.0",
-    "Xamarin.Forms": "2.2.0.31",
-    "Xamarin.Forms.Maps": "2.2.0.31"
+    "Xamarin.Forms": "2.4.0.282",
+    "Xamarin.Forms.Maps": "2.4.0.282"
   },
   "frameworks": {
     "uap10.0": {}

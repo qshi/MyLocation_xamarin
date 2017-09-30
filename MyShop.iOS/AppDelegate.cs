@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 using ImageCircle.Forms.Plugin.iOS;
-
+using KontaktSDK;
 
 #if __UNIFIED__
 
@@ -30,7 +30,7 @@ namespace MyShop.iOS
 		{
 			MapServices.ProvideAPIKey("AIzaSyApVhhHzhJF59Qbp3SWmyVaGtKVvx3lhqU");
 
-
+            Kontakt.APIKey = "ENPNShkXmqlRmBrgWkluLCdvZdewPFPd";
 
 			UINavigationBar.Appearance.BarTintColor = UIColor.FromRGB(43, 132, 211); //bar background
 			UINavigationBar.Appearance.TintColor = UIColor.White; //Tint color of button items

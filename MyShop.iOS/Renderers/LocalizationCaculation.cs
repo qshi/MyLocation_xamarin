@@ -32,7 +32,7 @@ namespace MyShop.iOS
 			{
 				var pair = new Tuple <string, double> (item.Key, item.Value);
 				fullid.Add(pair);
-				Console.WriteLine("Key: {0}, Value: {1}", item.Key, item.Value);
+				//Console.WriteLine("Key: {0}, Value: {1}", item.Key, item.Value);
 			}
 
 			Point A = new Point { x = landmarkbeacons[fullid[0].Item1].Latitude, y = landmarkbeacons[fullid[0].Item1].Longitude};
@@ -81,7 +81,7 @@ namespace MyShop.iOS
 			userlocation.Latitude = P.x;
 			userlocation.Longitude = P.y;
 
-			Console.WriteLine("userlocation: " + P.x + "-" + P.y);
+			//Console.WriteLine("userlocation: " + P.x + "-" + P.y);
 			return userlocation;
 
 		}
