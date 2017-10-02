@@ -32,8 +32,8 @@ namespace MyShop
 
 			MyPosition.Clicked += async (sender, e) =>
 			{
-				//var action = await DisplayActionSheet("ActionSheet: SavePhoto?", "Cancel", "Delete", "Photo Roll", "Email");
-				//await Navigation.PushAsync(new HelperPage());
+				var action = await DisplayActionSheet("Help: What do you want to do?", "Cancel", "I need help", "Search for people in need nearby");
+                await Navigation.PushAsync(new HelperPage(action));
 			};
 		}
 	}

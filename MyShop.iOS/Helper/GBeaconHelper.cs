@@ -14,6 +14,7 @@ namespace BleIosExample.Helper
 				Major = (long) beacon.Major,
 				Minor = (long) beacon.Minor,
 				Rssi = (int) beacon.Rssi,
+                Accuracy = beacon.Accuracy,
 				Timestamp = DateTime.Now,
 				Uuid = beacon.ProximityUuid.AsString()
 

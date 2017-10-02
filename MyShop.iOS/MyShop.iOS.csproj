@@ -287,6 +287,18 @@
     <Compile Include="Renderers\Prediction.cs" />
     <Compile Include="Renderers\MapDelegate.cs" />
     <Compile Include="Renderers\LocalizationCaculation.cs" />
+    <Compile Include="Renderers\NeedHelpRenderer.cs" />
+    <Compile Include="Renderers\Defaults.cs" />
+    <Compile Include="Renderers\UuidPickerView.cs" />
+    <Compile Include="Renderers\Helpers.cs" />
+    <Compile Include="Renderers\ConfigurationViewController.cs" />
+    <Compile Include="Renderers\ConfigurationViewController.designer.cs">
+      <DependentUpon>ConfigurationViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Renderers\RangingViewController.cs" />
+    <Compile Include="Renderers\RangingViewController.designer.cs">
+      <DependentUpon>RangingViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

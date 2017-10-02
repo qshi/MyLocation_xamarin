@@ -1,25 +1,33 @@
 ﻿<Properties StartupConfiguration="{922B72BE-8B10-4B52-8D48-881853B15028}|Default">
-  <MonoDevelop.Ide.ItemProperties.MyShop.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.9fc28c5f349d151903235c81cf9e3a85e78627c3" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MyShop.iOS/Renderers/LocalizationCaculation.cs">
+  <MonoDevelop.Ide.ItemProperties.MyShop.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MyShop.iOS/Renderers/RangingViewController.cs">
     <Files>
-      <File FileName="MyShop.iOS/Renderers/LocalizationCaculation.cs" Line="35" Column="7" />
-      <File FileName="MyShop.iOS/Renderers/MapDelegate.cs" Line="65" Column="37" />
-      <File FileName="MyShop.iOS/Renderers/MyPositionPageRenderer.cs" Line="9" Column="1" />
+      <File FileName="MyShop.iOS/Renderers/NeedHelpRenderer.cs" Line="15" Column="34" />
+      <File FileName="MyShop.iOS/Renderers/ConfigurationViewController.cs" Line="79" Column="16" />
+      <File FileName="MyShop/Views/HomePage.xaml.cs" Line="35" Column="134" />
+      <File FileName="MyShop.iOS/Renderers/MyPositionPageRenderer.cs" Line="485" Column="39" />
+      <File FileName="MyShop/Views/HelperPage.cs" Line="12" Column="34" />
+      <File FileName="MyShop.iOS/Renderers/RangingViewController.cs" Line="66" Column="9" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="MyShop" expanded="True">
-            <Node name="Admin" expanded="True" />
+            <Node name="MyShop" expanded="True">
+              <Node name="Views" expanded="True">
+                <Node name="HomePage.xaml" expanded="True" />
+                <Node name="SearchPeoplePage.cs" selected="True" />
+                <Node name="StoresPage.xaml" expanded="True" />
+              </Node>
+            </Node>
             <Node name="MyShop.iOS" expanded="True">
-              <Node name="References" expanded="True" />
-              <Node name="ComponentReferenceFolder" expanded="True" />
               <Node name="BLE" expanded="True" />
               <Node name="Helper" expanded="True" />
               <Node name="Helpers" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Renderers" expanded="True">
-                <Node name="LocalizationCaculation.cs" selected="True" />
+                <Node name="ConfigurationViewController.cs" expanded="True" />
+                <Node name="RangingViewController.cs" expanded="True" />
               </Node>
             </Node>
           </Node>

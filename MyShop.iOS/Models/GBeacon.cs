@@ -12,7 +12,7 @@ namespace BleIosExample.Models
 		public long Major { get; set; }
 		public int Rssi { get; set; }
 		public string Uuid { get; set; }
-
+        public double Accuracy { get; set; }
 		public string FullId
 		{
 			get { return this.Major + "-" + this.Minor; }

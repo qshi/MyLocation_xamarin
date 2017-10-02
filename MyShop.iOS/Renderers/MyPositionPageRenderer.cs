@@ -44,7 +44,6 @@ using nuint = global::System.UInt32;
 using System.Collections.Generic;
 using Google.Maps;
 
-
 [assembly: ExportRenderer(typeof(PositionPage), typeof(MyPositionPageRenderer))]
 
 namespace MyShop.iOS
@@ -345,7 +344,7 @@ namespace MyShop.iOS
 				if (instructionview.Text == "") instructionview.Text = "Your heading:" + myheading.ToString();
 				else {
 					int headingidx = instructionview.Text.LastIndexOf("Your heading");
-					if (headingidx > 0)
+					if (headingidx >= 0)
 					{
 						string newinstruction = instructionview.Text.Substring(0, headingidx);
 						newinstruction += "Your heading:" + myheading.ToString();
@@ -414,6 +413,7 @@ namespace MyShop.iOS
 
 		private void AddOrUpdateBeacon(GBeacon beacon)
 		{
+            if (beacon.Major.ToString() == "999") return;  // 999 --> virtual BLE
 
 		 	var beaconFullId = beacon.Major + "-" + beacon.Minor;
 			var rssi = beacon.Rssi;
