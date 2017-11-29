@@ -75,7 +75,7 @@
 				BackgroundColor="#3498DB"
 				BorderRadius="0"
 				TextColor="White" 
-				Text="New iBeacon"/>
+				Text="New Landmark"/>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

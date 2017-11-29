@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>MyShopAdmin</RootNamespace>
     <AssemblyName>MyShopAdmin</AssemblyName>
-    <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>

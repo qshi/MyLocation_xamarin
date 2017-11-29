@@ -47,11 +47,13 @@ namespace MyShopAdmin
 				//Store.Name = "";
 				Store.LandmarksType = 1;
 				isNew = true;
-			}
+            } else if (Store.ISNew) {
+                isNew = true;
+            }
 
 			BindingContext = ViewModel = new StoreViewModel(this);
 
-			Title = isNew ? "New iBeacon" : "Edit iBeacon";
+			Title = isNew ? "New Landmark" : "Edit Landmark";
 
 			var uuid = new EntryCell { Label = "UUID" };
 			uuid.SetBinding(EntryCell.TextProperty, "Uuid");
@@ -154,45 +156,19 @@ namespace MyShopAdmin
 				HasUnevenRows = true,
 				Intent = TableIntent.Form,
 				Root = new TableRoot {
-					new TableSection ("Information") {
-						(name = (isNew)? uuid : new EntryCell {Label = "UUID", Text = Store.Name}),
-
-						(locationHint = (isNew)? major : new EntryCell {Label = "Major ID", Text = Store.LocationHint}),
-						(locationCode = (isNew)? minor : new EntryCell {Label = "Minor ID", Text = Store.LocationCode}),
-						(scaniBeacon = new TextCell()
-							{
-								Text="Scan iBeacon"
-							}),
-						(versioncell = new PickerCell()
-						{
-							//Label = "Type",
-							Picker = version
-
-						}),
-						(phoneNumber = new EntryCell {Label = "Phone Number", Text = Store.PhoneNumber, Placeholder ="555-555-5555"})
-
-					},
-
-
-					new TableSection ("Image") {
-						(imageUrl = new EntryCell { Label="Image URL", Text = Store.Image, Placeholder = ".png or .jpg image link" }),
-						(refreshImage = new TextCell()
-							{
-								Text="Refresh Image"
-							}),
-						new ViewCell { View = (image = new Image
-							{
-								HeightRequest = 400,
-								VerticalOptions = LayoutOptions.FillAndExpand
-							})
-						}
-					},
+					
 					new TableSection ("Address") {
-						(streetAddress = new EntryCell {Label = "Street Address & Direction", Text = Store.StreetAddress }),
+						(streetAddress = new EntryCell {Label = "Name", Text = Store.StreetAddress }),
+                        (versioncell = new PickerCell()
+                        {
+                            //Label = "Type",
+                            Picker = version
+
+                        }),
 						(city = new EntryCell {Label = "City", Text = Store.City }),
 						(state = new EntryCell {Label = "State", Text = Store.State }),
 						(zipCode = new EntryCell {Label = "Zipcode", Text = Store.ZipCode }),
-						(country = new EntryCell{Label="Range", Text = Store.Country}),
+						(country = new EntryCell{Label="Description", Text = Store.Country}),
 
 						(latitude = (isNew)? newlatitude :new TextCell {Text = Store.Latitude.ToString() }),
 						(longitude = (isNew)? newlongitude : new TextCell {Text = Store.Longitude.ToString() }),
@@ -206,23 +182,48 @@ namespace MyShopAdmin
 							})
 					},
 
+                    new TableSection ("Image") {
+                        (imageUrl = new EntryCell { Label="Image URL", Text = Store.Image, Placeholder = ".png or .jpg image link" }),
+                        (refreshImage = new TextCell()
+                            {
+                                Text="Refresh Image"
+                            }),
+                        new ViewCell { View = (image = new Image
+                            {
+                                HeightRequest = 400,
+                                VerticalOptions = LayoutOptions.FillAndExpand
+                            })
+                        }
+                    },
 
-					new TableSection ("Hours") {
-						(mondayOpen = new EntryCell {Label = "Monday Open", Text = Store.MondayOpen}),
-						(mondayClose = new EntryCell {Label = "Monday Close", Text = Store.MondayClose}),
-						(tuesdayOpen = new EntryCell {Label = "Tuesday Open", Text = Store.TuesdayOpen}),
-						(tuesdayClose = new EntryCell {Label = "Tuesday Close", Text = Store.TuesdayClose}),
-						(wednesdayOpen = new EntryCell {Label = "Wedneday Open", Text = Store.WednesdayOpen}),
-						(wednesdayClose = new EntryCell {Label = "Wedneday Close", Text = Store.WednesdayClose}),
-						(thursdayOpen = new EntryCell {Label = "Thursday Open", Text = Store.ThursdayOpen}),
-						(thursdayClose = new EntryCell {Label = "Thursday Close", Text = Store.ThursdayClose}),
-						(fridayOpen = new EntryCell {Label = "Friday Open", Text = Store.FridayOpen}),
-						(fridayClose = new EntryCell {Label = "Friday Close", Text = Store.FridayClose}),
-						(saturdayOpen = new EntryCell {Label = "Saturday Open", Text = Store.SaturdayOpen}),
-						(saturdayClose =new EntryCell {Label = "Saturday Close", Text = Store.SaturdayClose}),
-						(sundayOpen = new EntryCell {Label = "Sunday Open", Text = Store.SundayOpen}),
-						(sundayClose = new EntryCell {Label = "Sunday Close", Text = Store.SundayClose}),
-					},
+                    new TableSection ("Information") {
+                        (name = (isNew)? uuid : new EntryCell {Label = "UUID", Text = Store.Name}),
+
+                        (locationHint = (isNew)? major : new EntryCell {Label = "Major ID", Text = Store.LocationHint}),
+                        (locationCode = (isNew)? minor : new EntryCell {Label = "Minor ID", Text = Store.LocationCode}),
+                        (scaniBeacon = new TextCell()
+                            {
+                                Text="Scan iBeacon"
+                            }),
+                        (phoneNumber = new EntryCell {Label = "Phone Number", Text = Store.PhoneNumber, Placeholder ="555-555-5555"})
+
+                    },
+					//new TableSection ("Hours") {
+					//	(mondayOpen = new EntryCell {Label = "Monday Open", Text = Store.MondayOpen}),
+					//	(mondayClose = new EntryCell {Label = "Monday Close", Text = Store.MondayClose}),
+					//	(tuesdayOpen = new EntryCell {Label = "Tuesday Open", Text = Store.TuesdayOpen}),
+					//	(tuesdayClose = new EntryCell {Label = "Tuesday Close", Text = Store.TuesdayClose}),
+					//	(wednesdayOpen = new EntryCell {Label = "Wedneday Open", Text = Store.WednesdayOpen}),
+					//	(wednesdayClose = new EntryCell {Label = "Wedneday Close", Text = Store.WednesdayClose}),
+					//	(thursdayOpen = new EntryCell {Label = "Thursday Open", Text = Store.ThursdayOpen}),
+					//	(thursdayClose = new EntryCell {Label = "Thursday Close", Text = Store.ThursdayClose}),
+					//	(fridayOpen = new EntryCell {Label = "Friday Open", Text = Store.FridayOpen}),
+					//	(fridayClose = new EntryCell {Label = "Friday Close", Text = Store.FridayClose}),
+					//	(saturdayOpen = new EntryCell {Label = "Saturday Open", Text = Store.SaturdayOpen}),
+					//	(saturdayClose =new EntryCell {Label = "Saturday Close", Text = Store.SaturdayClose}),
+					//	(sundayOpen = new EntryCell {Label = "Sunday Open", Text = Store.SundayOpen}),
+					//	(sundayClose = new EntryCell {Label = "Sunday Close", Text = Store.SundayClose}),
+					//},
 				},
 			};
 

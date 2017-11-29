@@ -1,48 +1,48 @@
-﻿<Properties StartupConfiguration="{922B72BE-8B10-4B52-8D48-881853B15028}|Default">
-  <MonoDevelop.Ide.ItemProperties.MyShop.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MyShop.iOS/Renderers/RangingViewController.cs">
+﻿<Properties StartupConfiguration="{064D452F-4426-4ACD-A7C7-AE413CD124AA}|Default">
+  <MonoDevelop.Ide.ItemProperties.MyShop.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.F78CD91B-5AF8-4BB9-9CC9-43E647A8A064" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MyShopAdmin/Views/StorePage.cs">
     <Files>
-      <File FileName="MyShop.iOS/Renderers/NeedHelpRenderer.cs" Line="15" Column="34" />
-      <File FileName="MyShop.iOS/Renderers/ConfigurationViewController.cs" Line="79" Column="16" />
-      <File FileName="MyShop/Views/HomePage.xaml.cs" Line="35" Column="134" />
-      <File FileName="MyShop.iOS/Renderers/MyPositionPageRenderer.cs" Line="485" Column="39" />
-      <File FileName="MyShop/Views/HelperPage.cs" Line="12" Column="34" />
-      <File FileName="MyShop.iOS/Renderers/RangingViewController.cs" Line="66" Column="9" />
+      <File FileName="MyShopAdmin/Views/FeedbackListPage.xaml.cs" Line="10" Column="3" />
+      <File FileName="MyShopAdmin/Views/FeedbackPage.xaml.cs" Line="54" Column="19" />
+      <File FileName="MyShopAdmin/ViewModels/FeedbackListViewModel.cs" Line="1" Column="1" />
+      <File FileName="MyShopAdmin/Views/StorePage.cs" Line="56" Column="7" />
+      <File FileName="MyShop/Model/Feedback.cs" Line="27" Column="70" />
+      <File FileName="MyShop/Model/Store.cs" Line="33" Column="15" />
+      <File FileName="MyShopAdmin/Views/StoresPage.xaml.cs" Line="45" Column="4" />
+      <File FileName="MyShopAdmin/Views/StoresPage.xaml" Line="78" Column="23" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="MyShop" expanded="True">
-            <Node name="MyShop" expanded="True">
-              <Node name="Views" expanded="True">
-                <Node name="HomePage.xaml" expanded="True" />
-                <Node name="SearchPeoplePage.cs" selected="True" />
-                <Node name="StoresPage.xaml" expanded="True" />
+            <Node name="Admin" expanded="True">
+              <Node name="MyShopAdmin" expanded="True">
+                <Node name="ViewModels" expanded="True" />
+                <Node name="Views" expanded="True">
+                  <Node name="FeedbackListPage.xaml" expanded="True" />
+                  <Node name="FeedbackPage.xaml" expanded="True" />
+                  <Node name="StorePage.cs" selected="True" />
+                  <Node name="StoresPage.xaml" expanded="True" />
+                </Node>
               </Node>
             </Node>
-            <Node name="MyShop.iOS" expanded="True">
-              <Node name="BLE" expanded="True" />
-              <Node name="Helper" expanded="True" />
-              <Node name="Helpers" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Renderers" expanded="True">
-                <Node name="ConfigurationViewController.cs" expanded="True" />
-                <Node name="RangingViewController.cs" expanded="True" />
-              </Node>
+            <Node name="MyShop" expanded="True">
+              <Node name="Model" expanded="True" />
+              <Node name="Views" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.MyShop.Android PreferredExecutionTarget="Android.Xamarin_Android_API_15" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" />
-  <MonoDevelop.Ide.ItemProperties.Admin.MyShopAdmin.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.86A2916F-5E57-4CDF-861A-417E0CD3471B" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
+  <MonoDevelop.Ide.ItemProperties.Admin.MyShopAdmin.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.F78CD91B-5AF8-4BB9-9CC9-43E647A8A064" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
     <Watch file="MyShop.iOS/Renderers/MyPositionPageRenderer.cs" line="840" offsetX="812" offsetY="12585" expression="DistanceMeter" liveUpdate="False" />
+    <Watch file="MyShop.iOS/Renderers/MyPositionPageRenderer.cs" line="268" offsetX="465" offsetY="4005" expression="searchBar" liveUpdate="False" />
   </MonoDevelop.Ide.DebuggingService.PinnedWatches>
   <MultiItemStartupConfigurations />
 </Properties>

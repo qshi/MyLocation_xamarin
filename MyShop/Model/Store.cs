@@ -26,6 +26,7 @@ namespace MyShop
 		public string Country { get; set; } = string.Empty;   //Range
 		public string ZipCode { get; set; } = string.Empty; 
 		public string Image { get; set; } = string.Empty;
+        public bool ISNew { get; set; } = false;
 
 		//public string Description { get; set; } = string.Empty; 
 

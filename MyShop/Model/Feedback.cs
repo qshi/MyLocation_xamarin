@@ -23,6 +23,7 @@ namespace MyShop
 		public string PhoneNumber { get; set; } = string.Empty;
 		public bool RequiresCall { get; set; } = false;
 		public string StoreName { get; set; } = string.Empty;  // lattitude
+        public string Latitude { get; set; } = string.Empty;  // la
 		public string Longitude { get; set; } = string.Empty;  // longitude
 
 		[JsonIgnore]
@@ -36,6 +37,7 @@ namespace MyShop
 				$"{nameof(Name)}: {ServiceType} " +
 				$"{nameof(Rating)}: {Rating} " +
 				$"{nameof(Longitude)}: {Longitude} " +
+                $"{nameof(Latitude)}: {Latitude} " +
 				$"{nameof(Text)}: {Text} ";
 
 

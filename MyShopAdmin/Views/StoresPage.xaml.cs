@@ -16,7 +16,8 @@ namespace MyShopAdmin
 			viewModel.ForceSync = true;
 			NewStore.Clicked += async (sender, e) =>
 			{
-				await Navigation.PushAsync(new StorePage(null));
+                Store landmark = null;
+                await Navigation.PushAsync(new StorePage(landmark));
 			};
 
 			StoreList.ItemSelected += async (sender, e) =>
@@ -36,7 +37,7 @@ namespace MyShopAdmin
 		{
 			var mi = ((MenuItem)sender);
 
-			var result = await DisplayAlert("Delete?", "Are you sure you want to remove this store?", "Yes", "No");
+			var result = await DisplayAlert("Delete?", "Are you sure you want to remove this landmark?", "Yes", "No");
 			if (result)
 			{
 				await viewModel.DeleteStore(mi.CommandParameter as Store);
