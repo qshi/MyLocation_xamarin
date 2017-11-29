@@ -32,7 +32,10 @@ namespace MyShop
 		[JsonIgnore]
 		public Uri ImageUri
 		{
-			get { return new System.Uri(Image); }
+            get {
+                if (Image == "") return new System.Uri("https://blog.xamarin.com/wp-content/uploads/2016/01/azure.png");
+                return new System.Uri(Image);
+                 }
 		}
 
 		public double Latitude { get; set; } = 0;

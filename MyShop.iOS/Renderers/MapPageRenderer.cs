@@ -37,6 +37,8 @@ namespace MyShop.iOS
 		private MapView mapView;
 		List<Marker> markers;
 		//double latti=0, longi=0;
+        CLLocationManager iPhoneLocationManager = null;
+        bool shouldUpdate;
 		public SelectPositionPage _selectPagePosition
 		{
 			get
@@ -48,7 +50,7 @@ namespace MyShop.iOS
 		public override void LoadView()
 		{
 			base.LoadView();
-
+            shouldUpdate = false;
 			CameraPosition camera = CameraPosition.FromCamera(latitude: 42.392262,
 														  longitude: -72.526992,
 														  zoom: 6);
@@ -72,7 +74,7 @@ namespace MyShop.iOS
 			{
 
 				// Animate to the marker
-				var cam = new CameraPosition(aMarker.Position, 8, 50, 60);
+				var cam = new CameraPosition(aMarker.Position, 18, 50, 60);
 				mapView.Animate(cam);
 				UIAlertView alert = new UIAlertView();
 				alert.Title = "Are you sure you want to select this position as the landmarks position?";
@@ -117,6 +119,22 @@ namespace MyShop.iOS
 		{
 			base.ViewWillAppear(animated);
 			mapView.StartRendering();
+            iPhoneLocationManager = new CLLocationManager();
+            if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
+            {
+                iPhoneLocationManager.RequestWhenInUseAuthorization();
+            }
+
+            iPhoneLocationManager.LocationsUpdated += (sender, e) =>
+            {
+                if (!shouldUpdate) {
+                    shouldUpdate = true; 
+                    var myposition = e.Locations[0];
+                    var cam = new CameraPosition(myposition.Coordinate, 18, 0, 0);
+                    mapView.Animate(cam);
+                }
+            };
+            iPhoneLocationManager.StartUpdatingLocation();
 		}
 
 		public override void ViewWillDisappear(bool animated)

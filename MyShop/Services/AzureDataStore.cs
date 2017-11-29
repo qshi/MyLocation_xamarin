@@ -35,7 +35,7 @@ namespace MyShop
 		public async Task Init()
 		{
 			initialized = true;
-			const string path = "syncstore.db";
+			const string path = "syncstores.db";
 			var store = new MobileServiceSQLiteStore(path);
 			store.DefineTable<Store>();
 			store.DefineTable<Feedback> ();

@@ -91,7 +91,7 @@ namespace MyShop.iOS
 
         private void AddOrUpdateBeacon(GBeacon beacon)
         {
-            //if (beacon.Major.ToString() != "999") return;
+            if (beacon.Major.ToString() != "999") return;
             var beaconFullId = beacon.Major + "-" + beacon.Minor;
             var rssi = beacon.Rssi;
             var timestamp = DateTime.Now.ToString();// set zero

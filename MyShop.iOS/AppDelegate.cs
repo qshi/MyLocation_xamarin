@@ -29,7 +29,7 @@ namespace MyShop.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			MapServices.ProvideAPIKey("AIzaSyApVhhHzhJF59Qbp3SWmyVaGtKVvx3lhqU");
-
+            PlacesClient.ProvideApiKey("AIzaSyApVhhHzhJF59Qbp3SWmyVaGtKVvx3lhqU");
             Kontakt.APIKey = "ENPNShkXmqlRmBrgWkluLCdvZdewPFPd";
 
 			UINavigationBar.Appearance.BarTintColor = UIColor.FromRGB(43, 132, 211); //bar background

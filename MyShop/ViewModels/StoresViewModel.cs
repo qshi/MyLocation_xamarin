@@ -125,7 +125,7 @@ namespace MyShop
 			StoresGrouped.Clear();
 			var sorted = from store in Stores
 						 orderby store.Country, store.City
-						 group store by store.Country into storeGroup
+						 group store by store.Landmarks into storeGroup
 						 select new Grouping<string, Store>(storeGroup.Key, storeGroup);
 
 			StoresGrouped.ReplaceRange(sorted);

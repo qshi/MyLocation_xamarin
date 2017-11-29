@@ -26,7 +26,51 @@ namespace MyShop.iOS
 			_map = map;
 		}
 
-		public override void DidTapAtCoordinate(MapView mapView, CLLocationCoordinate2D coordinate)
+        public override bool TappedMarker(MapView mapView, Marker marker) {
+            var cam = new CameraPosition(marker.Position, 18, 0, 0);
+            mapView.Animate(cam);
+            UIAlertView alert = new UIAlertView();
+            alert.Title = Variables.isSelectingDestination ? "Cancel previous destinsation?" : (Locations.Count > 0) ? "Select this position as way point?": "Select this position as destination?";
+            alert.AddButton("Cancel");
+            alert.AddButton("OK");
+            alert.CancelButtonIndex = 0;
+            alert.Message = " If yes, please click OK";
+            //alert.AlertViewStyle = UIAlertViewStyle.PlainTextInput;
+            alert.Clicked += (object s, UIButtonEventArgs ev) =>
+            {
+                if (ev.ButtonIndex != 0)
+                {
+                    if (Variables.isSelectingDestination)
+                    {
+                        Variables.isSelectingDestination = false;
+                        Locations.Clear();
+                        if (Lines.Count > 0)
+                        {
+                            foreach (var line in Lines)
+                            {
+                                line.Map = null;
+                            }
+                            Lines.Clear();
+                        }
+                    }
+                    else
+                    {
+                        Variables.isSelectingDestination = true;
+                        Variables.destinationMarker = marker;
+                        Locations.Add(mapView.MyLocation.Coordinate);
+                        Locations.Add(marker.Position);
+                        if (Locations.Count > 1)
+                        {
+                            SetDirectionsQuery();
+                        }
+                    }
+                }
+            };
+            alert.Show();
+            return true;
+        }
+
+        public override void DidLongPressAtCoordinate(MapView mapView, CLLocationCoordinate2D coordinate)
 		{
 
 			//Create/Add Marker 
