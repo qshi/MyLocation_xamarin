@@ -44,10 +44,11 @@ namespace MyShopAdmin.Views
                     Store.SaturdayClose = "8pm";
                     Store.SundayClose = "6pm";
                     //Store.Name = "";
-                    Store.StreetAddress = feedback.Text;
+                    Store.StreetAddress = feedback.StoreName;
                     Store.LandmarksType = feedback.ServiceType;
+                    Store.Country = feedback.Text;
                     Store.Longitude = Convert.ToDouble(feedback.Longitude);
-                    Store.Latitude = Convert.ToDouble(feedback.StoreName);    //!!?
+                    Store.Latitude = Convert.ToDouble(feedback.Latitude);    //!!?
                     Store.ISNew = true;
                     await Navigation.PushAsync(new StorePage(Store));
 

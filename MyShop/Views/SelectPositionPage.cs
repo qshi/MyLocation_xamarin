@@ -13,13 +13,13 @@ namespace MyShop
 			get
 			{
 				if (_feedbackVm != null)
-					return _feedbackVm.StoreName;
+					return _feedbackVm.Latitude;
 				return "";
 			}
 			set
 			{
 				if (_feedbackVm != null)
-					_feedbackVm.StoreName = value;
+					_feedbackVm.Latitude = value;
 			}
 
 		}

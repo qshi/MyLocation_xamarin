@@ -49,8 +49,8 @@
 				                           Padding="8" 
 				                           Spacing="4"
 				                           VerticalOptions="Center">
-				                <Label Text="{Binding Name}" FontSize="Medium"  TextColor="#3498DB" LineBreakMode="NoWrap"/>
-				                <Label Text="{Binding LocationHint}" FontSize="Small" LineBreakMode="WordWrap"/>
+				                <Label Text="{Binding StreetAddress}" FontSize="Medium"  TextColor="#3498DB" LineBreakMode="NoWrap"/>
+				                <Label Text="{Binding ZipCode}" FontSize="Small" LineBreakMode="WordWrap"/>
 				              </StackLayout>
 				            </Grid>
 				            <ViewCell.ContextActions>

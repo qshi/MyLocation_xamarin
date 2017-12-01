@@ -17,7 +17,7 @@ namespace MyShopAdmin
         public ObservableCollection<Grouping<string, Feedback>> FeedbacksGrouped { get; set; }
         public FeedbackListViewModel(Page page) : base(page)
         {
-            Title = "Feedback";
+            Title = "Reports";
             dataStore = DependencyService.Get<IDataStore>();
             Feedbacks = new ObservableCollection<Feedback>();
             FeedbacksGrouped = new ObservableCollection<Grouping<string, Feedback>>();

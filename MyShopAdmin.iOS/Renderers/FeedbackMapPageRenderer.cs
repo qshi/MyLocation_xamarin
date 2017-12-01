@@ -55,7 +55,7 @@ namespace MyShopAdmin.iOS
 
 			CameraPosition camera = CameraPosition.FromCamera(latitude: 42.392262,
 														  longitude: -72.526992,
-														  zoom: 6);
+														  zoom: 17);
 			mapView = MapView.FromCamera(CGRect.Empty, camera);
 			mapView.MyLocationEnabled = true;
 
@@ -74,7 +74,7 @@ namespace MyShopAdmin.iOS
 			foreach (var feedback in _feedbackMapPage.Feedbacks)
 			{
 				CLLocationCoordinate2D pos;
-				pos.Latitude = Convert.ToDouble(feedback.StoreName);
+				pos.Latitude = Convert.ToDouble(feedback.Latitude);
 				pos.Longitude = Convert.ToDouble(feedback.Longitude);
 
 				var marker = new Marker()

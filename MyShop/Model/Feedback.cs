@@ -25,6 +25,7 @@ namespace MyShop
 		public string StoreName { get; set; } = string.Empty;  // lattitude
         public string Latitude { get; set; } = string.Empty;  // la
 		public string Longitude { get; set; } = string.Empty;  // longitude
+        public string Image { get; set; } = string.Empty;
 
 		[JsonIgnore]
 		public string VisitDateDisplay => FeedbackDate.ToString("g");

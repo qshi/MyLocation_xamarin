@@ -77,8 +77,8 @@ namespace MyShopAdmin
 
 			};
 			version.Items.Add("Work Zone");
-			version.Items.Add("Bus Stop");
-			version.Items.Add("Building Entrance");
+            version.Items.Add("Building Entrance");
+            version.Items.Add("Bus Stop");
 			version.Items.Add("Round About");
 			version.Items.Add("Traffic Signal");
 			version.Items.Add("Others");
@@ -170,8 +170,8 @@ namespace MyShopAdmin
 						(zipCode = new EntryCell {Label = "Zipcode", Text = Store.ZipCode }),
 						(country = new EntryCell{Label="Description", Text = Store.Country}),
 
-						(latitude = (isNew)? newlatitude :new TextCell {Text = Store.Latitude.ToString() }),
-						(longitude = (isNew)? newlongitude : new TextCell {Text = Store.Longitude.ToString() }),
+                        (latitude = (Store.Latitude == 0)? newlatitude :new TextCell {Text = Store.Latitude.ToString() }),
+                        (longitude = (Store.Longitude == 0)? newlongitude : new TextCell {Text = Store.Longitude.ToString() }),
 						(selectlocation = new TextCell()
 							{
 								Text="Select Location"

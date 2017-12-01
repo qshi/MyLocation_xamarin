@@ -54,7 +54,7 @@ namespace MyShopAdmin.iOS
 
 			CameraPosition camera = CameraPosition.FromCamera(latitude: 42.392262,
 														  longitude: -72.526992,
-														  zoom: 6);
+														  zoom: 17);
 			mapView = MapView.FromCamera(CGRect.Empty, camera);
 			mapView.MyLocationEnabled = true;
 
@@ -75,10 +75,10 @@ namespace MyShopAdmin.iOS
 			{
 
 				// Animate to the marker
-				var cam = new CameraPosition(aMarker.Position, 8, 50, 60);
+				var cam = new CameraPosition(aMarker.Position, 17, 50, 60);
 				mapView.Animate(cam);
 				UIAlertView alert = new UIAlertView();
-				alert.Title = "Are you sure you want to select this position as the ibeacons position?";
+				alert.Title = "Are you sure you want to select this position as the landmark position?";
 				alert.AddButton("Cancel");
 				alert.AddButton("OK");
 				alert.CancelButtonIndex = 0;

@@ -15,7 +15,7 @@ namespace MyShop
 		public bool ForceSync { get; set; }
 		public StoresViewModel(Page page) : base(page)
 		{
-			Title = "Locations";
+			Title = "Landmarks";
 			dataStore = DependencyService.Get<IDataStore>();
 			Stores = new ObservableRangeCollection<Store>();
 			StoresGrouped = new ObservableRangeCollection<Grouping<string, Store>>();
@@ -29,7 +29,7 @@ namespace MyShop
 			set
 			{
 				selectedStore = value;
-				OnPropertyChanged("SelectedLocation");
+				OnPropertyChanged("SelectedLandmark");
 				if (selectedStore == null)
 					return;
 

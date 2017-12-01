@@ -13,7 +13,7 @@ namespace MyShop
 		public FeedbackViewModel(Page page) : base(page)
 		{
 			dataStore = DependencyService.Get<IDataStore>();
-			Title = "Leave Report";
+			Title = "Report";
 		}
 
 		public async Task<IEnumerable<Store>> GetStoreAsync()
@@ -77,6 +77,7 @@ namespace MyShop
 					Name = Name,
 					PhoneNumber = PhoneNumber,
 					Longitude = Longitude,
+                    Latitude = Latitude,
 					RequiresCall = RequiresCall,
 				});
 			}
@@ -123,6 +124,15 @@ namespace MyShop
 			set { SetProperty(ref longitude, value); }
 		}
 
+        string latitude = string.Empty;
+        public string Latitude
+        {
+            get { return latitude; }
+            set
+            {
+                SetProperty(ref latitude, value);
+            }
+        }
 
 		string message = "Loading...";
 		public string Message

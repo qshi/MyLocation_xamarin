@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage 
 	xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
@@ -44,28 +44,28 @@
 
 						 		<Label 
 						 			Grid.Column="1"
-						 			Text="Visit Date" 
+						 			Text="Report Date" 
 						 			HorizontalOptions="End"
 						 			VerticalOptions="Center"/>
 
 						 		<Label 
 						 			Grid.Column="1"
-						 			Grid.Row="1"
+						 			Grid.Row="2"
 						 			Text="Name" 
 					 				HorizontalOptions="End"
 						 			VerticalOptions="Center"/>
 
 						 		<Label 
 						 			Grid.Column="1"
-						 			Grid.Row="2"
-						 			Text="Needs Call?" 
+						 			Grid.Row="1"
+						 			Text="Landmark" 
 						 			HorizontalOptions="End"
 						 			VerticalOptions="Center"/>
 
 					 			<Label 
 						 			Grid.Column="1"
 						 			Grid.Row="3"
-						 			Text="Feedback" 
+						 			Text="Description" 
 						 			HorizontalOptions="End"
 						 			VerticalOptions="Start"/>
 						 			   
@@ -80,17 +80,17 @@
 
 				                <Label 
 							 		   Grid.Column="2"
-							 		   Grid.Row="1"
+							 		   Grid.Row="2"
 				                	   Text="{Binding Name}" 
 				                	   LineBreakMode="NoWrap"
 						 			   VerticalOptions="Center"/>
 
 				                <Label
 						 				Grid.Column="2"
-						 			   Grid.Row="2" 
-				                	   IsVisible="{Binding RequiresCall}"
-				                	   VerticalOptions="Center"
-				                	   Text="YES"/>
+						 			   Grid.Row="1" 
+				                	   Text="{Binding StoreName}"
+                                       LineBreakMode="NoWrap"
+                                       VerticalOptions="Center"/>
 
 
 				                <Label 

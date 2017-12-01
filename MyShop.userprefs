@@ -1,15 +1,11 @@
 ﻿<Properties StartupConfiguration="{064D452F-4426-4ACD-A7C7-AE413CD124AA}|Default">
-  <MonoDevelop.Ide.ItemProperties.MyShop.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.F78CD91B-5AF8-4BB9-9CC9-43E647A8A064" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MyShopAdmin/Views/StorePage.cs">
+  <MonoDevelop.Ide.ItemProperties.MyShop.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.9fc28c5f349d151903235c81cf9e3a85e78627c3" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MyShopAdmin/Views/FeedbackListPage.xaml.cs">
     <Files>
+      <File FileName="MyShop/Model/Feedback.cs" Line="19" Column="19" />
+      <File FileName="MyShopAdmin/Views/HomePage.xaml.cs" Line="9" Column="3" />
+      <File FileName="MyShopAdmin/Views/FeedbackListPage.xaml" Line="124" Column="1" />
       <File FileName="MyShopAdmin/Views/FeedbackListPage.xaml.cs" Line="10" Column="3" />
-      <File FileName="MyShopAdmin/Views/FeedbackPage.xaml.cs" Line="54" Column="19" />
-      <File FileName="MyShopAdmin/ViewModels/FeedbackListViewModel.cs" Line="1" Column="1" />
-      <File FileName="MyShopAdmin/Views/StorePage.cs" Line="56" Column="7" />
-      <File FileName="MyShop/Model/Feedback.cs" Line="27" Column="70" />
-      <File FileName="MyShop/Model/Store.cs" Line="33" Column="15" />
-      <File FileName="MyShopAdmin/Views/StoresPage.xaml.cs" Line="45" Column="4" />
-      <File FileName="MyShopAdmin/Views/StoresPage.xaml" Line="78" Column="23" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,26 +13,25 @@
           <Node name="MyShop" expanded="True">
             <Node name="Admin" expanded="True">
               <Node name="MyShopAdmin" expanded="True">
+                <Node name="References" expanded="True" />
+                <Node name="Properties" expanded="True" />
                 <Node name="ViewModels" expanded="True" />
                 <Node name="Views" expanded="True">
-                  <Node name="FeedbackListPage.xaml" expanded="True" />
-                  <Node name="FeedbackPage.xaml" expanded="True" />
-                  <Node name="StorePage.cs" selected="True" />
-                  <Node name="StoresPage.xaml" expanded="True" />
+                  <Node name="FeedbackListPage.xaml" expanded="True">
+                    <Node name="FeedbackListPage.xaml.cs" selected="True" />
+                  </Node>
+                  <Node name="HomePage.xaml" expanded="True" />
                 </Node>
               </Node>
             </Node>
-            <Node name="MyShop" expanded="True">
-              <Node name="Model" expanded="True" />
-              <Node name="Views" expanded="True" />
-            </Node>
+            <Node name="MyShop" expanded="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
-  <MonoDevelop.Ide.ItemProperties.Admin.MyShopAdmin.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.F78CD91B-5AF8-4BB9-9CC9-43E647A8A064" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" />
+  <MonoDevelop.Ide.ItemProperties.Admin.MyShopAdmin.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

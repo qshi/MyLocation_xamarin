@@ -20,10 +20,10 @@ namespace MyShop
 		public string LocationCode { get; set; } = string.Empty; //Minor
 		public int Rssi { get; set; } = 0;
 
-		public string StreetAddress { get; set; } = string.Empty; //street info & direction
+		public string StreetAddress { get; set; } = string.Empty; //name
 		public string City { get; set; } = string.Empty;
 		public string State { get; set; } = string.Empty;
-		public string Country { get; set; } = string.Empty;   //Range
+		public string Country { get; set; } = string.Empty;   //description
 		public string ZipCode { get; set; } = string.Empty; 
 		public string Image { get; set; } = string.Empty;
         public bool ISNew { get; set; } = false;
