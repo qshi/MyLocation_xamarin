@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage 
 	xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
@@ -52,154 +52,9 @@
 					FontSize="Small"
 					Text="{Binding Store.Landmarks}"
 					HorizontalOptions="Center"/>
-				<Button 
-					x:Name="ButtonFindStore"
-					Grid.Row="2"
-					BackgroundColor="#3498DB"
-					BorderRadius="0"
-					TextColor="White" 
-					Image="phone.png"
-					Text="Call"
-					Command="{Binding CallCommand}"/>
-				<Label 
-					Grid.Row="2"
-					Grid.Column="1"
-					Grid.ColumnSpan="2"
-					VerticalOptions="Center"
-					HorizontalOptions="Center"
-					FontSize="Medium"
-					Text="{Binding Store.PhoneNumber}"/>
 
 				<Label
-					Grid.Row="3"
-					Grid.ColumnSpan="3" 
-					FontAttributes="Bold"
-					FontSize="Medium"
-					Text="Store Hours"
-					TextColor="#3498DB" />
-
-				<Label 
-					Grid.Row="4"
-					Grid.Column="0"
-					Grid.ColumnSpan="2"
-					FontAttributes="Bold"
-					FontSize="Small"
-					Text="Monday"
-					VerticalOptions="Center"/>
-
-				<Label 
-					Grid.Row="4"
-					Grid.Column="2"
-					FontSize="Small"
-					Text="{Binding Monday}"
-					HorizontalOptions="End"
-					VerticalOptions="Center"/>
-
-				<Label 
-					Grid.Row="5"
-					Grid.Column="0"
-					Grid.ColumnSpan="2"
-					FontAttributes="Bold"
-					FontSize="Small"
-					Text="Tuesday"
-					VerticalOptions="Center"/>
-
-				<Label 
-					Grid.Row="5"
-					Grid.Column="2"
-					FontSize="Small"
-					Text="{Binding Tuesday}"
-					HorizontalOptions="End"
-					VerticalOptions="Center"/>
-
-				<Label 
-					Grid.Row="6"
-					Grid.Column="0"
-					Grid.ColumnSpan="2"
-					FontAttributes="Bold"
-					FontSize="Small"
-					Text="Wednesday"
-					VerticalOptions="Center"/>
-
-				<Label 
-					Grid.Row="6"
-					Grid.Column="2"
-					FontSize="Small"
-					Text="{Binding Wednesday}"
-					HorizontalOptions="End"
-					VerticalOptions="Center"/>
-
-				<Label 
-					Grid.Row="7"
-					Grid.Column="0"
-					Grid.ColumnSpan="2"
-					FontAttributes="Bold"
-					FontSize="Small"
-					Text="Thursday"
-					VerticalOptions="Center"/>
-
-				<Label 
-					Grid.Row="7"
-					Grid.Column="2"
-					FontSize="Small"
-					Text="{Binding Thursday}"
-					HorizontalOptions="End"
-					VerticalOptions="Center"/>
-
-				<Label 
-					Grid.Row="8"
-					Grid.Column="0"
-					Grid.ColumnSpan="2"
-					FontAttributes="Bold"
-					FontSize="Small"
-					Text="Friday"
-					VerticalOptions="Center"/>
-
-				<Label 
-					Grid.Row="8"
-					Grid.Column="2"
-					FontSize="Small"
-					Text="{Binding Friday}"
-					HorizontalOptions="End"
-					VerticalOptions="Center"/>
-
-				<Label 
-					Grid.Row="9"
-					Grid.Column="0"
-					Grid.ColumnSpan="2"
-					FontAttributes="Bold"
-					FontSize="Small"
-					Text="Saturday"
-					VerticalOptions="Center"/>
-
-				<Label 
-					Grid.Row="9"
-					Grid.Column="2"
-					FontSize="Small"
-					Text="{Binding Saturday}"
-					HorizontalOptions="End"
-					VerticalOptions="Center"/>
-
-				<Label 
-					Grid.Row="10"
-					Grid.Column="0"
-					Grid.ColumnSpan="2"
-					FontAttributes="Bold"
-					FontSize="Small"
-					Text="Sunday"
-					VerticalOptions="Center"/>
-
-				<Label 
-					Grid.Row="10"
-					Grid.Column="2"
-					FontSize="Small"
-					Text="{Binding Sunday}"
-					HorizontalOptions="End"
-					VerticalOptions="Center"/>
-
-
-				<Label
-					Grid.Row="11"
+					Grid.Row="2"
 					Grid.ColumnSpan="3" 
 					FontAttributes="Bold"
 					FontSize="Medium"
@@ -207,13 +62,13 @@
 					TextColor="#3498DB"/>
 
 				<Label
-					Grid.Row="12"
+					Grid.Row="3"
 					Grid.Column="1" 
 					Grid.ColumnSpan="2"
 					FontSize="Small"
 					Text="{Binding Address1}"/>
 				<Label
-					Grid.Row="13"
+					Grid.Row="4"
 					Grid.Column="1" 
 					Grid.ColumnSpan="2"
 					FontSize="Small"
@@ -221,7 +76,7 @@
 
 
 				<Button 
-					Grid.Row="12"
+					Grid.Row="3"
 					Grid.RowSpan="2"
 					BackgroundColor="#3498DB" 
 					BorderRadius="0"
@@ -230,6 +85,24 @@
 					Text="Navigate"
 					Command="{Binding NavigateCommand}"
 					VerticalOptions="FillAndExpand"/>
+
+                <Label
+                    Grid.Row="6"
+                    Grid.ColumnSpan="3" 
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    Text="Description"
+                    TextColor="#3498DB" />
+          
+
+                <Label 
+                    Grid.Row="7"  
+                    Grid.ColumnSpan="3" 
+                    FontSize="Small"
+                    Text="{Binding Store.Country}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"/>
+
 
 				<maps:Map Grid.Row="14"
 						Grid.ColumnSpan="3" 

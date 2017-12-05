@@ -45,6 +45,14 @@ namespace MyShopAdmin
 		{
 			viewModel = vm;
 		}
+
+        public async void NavigateToStreetView(double latitude, double longitute)
+        {
+            await Navigation.PushAsync(new StreetViewPage(latitude, longitute));
+            //await Navigation.PopAsync();
+
+        }
+
 	}
 }
 

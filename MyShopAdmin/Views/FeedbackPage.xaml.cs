@@ -23,6 +23,11 @@ namespace MyShopAdmin.Views
                 phoneCallTask.MakePhoneCall(feedback.PhoneNumber.CleanPhone());
 			};
 
+            StreetViewButton.Clicked += async (sender, e) =>
+            {
+                await Navigation.PushAsync(new StreetViewPage(Convert.ToDouble(feedback.Latitude), Convert.ToDouble(feedback.Longitude)));
+            };
+
             ToolbarItems.Add(new ToolbarItem
             {
                 Text = "Add to Landmarks",

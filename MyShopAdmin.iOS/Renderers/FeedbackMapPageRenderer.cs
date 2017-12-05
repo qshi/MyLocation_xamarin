@@ -37,6 +37,7 @@ namespace MyShopAdmin.iOS
 			
 		}
 		MapView mapView;
+        List<string> landmarktypes;
 		//List<Marker> markers;
 
 		public FeedBackMapPage _feedbackMapPage
@@ -71,6 +72,15 @@ namespace MyShopAdmin.iOS
 			base.ViewWillAppear(animated);
 			mapView.StartRendering();
 
+            landmarktypes = new List<string>();
+            landmarktypes.Add("Work Zone");
+            landmarktypes.Add("Building Entrance");
+            landmarktypes.Add("Bus Stop");
+            landmarktypes.Add("Round About");
+            landmarktypes.Add("Crosswalk");
+            landmarktypes.Add("Others");
+
+
 			foreach (var feedback in _feedbackMapPage.Feedbacks)
 			{
 				CLLocationCoordinate2D pos;
@@ -79,20 +89,38 @@ namespace MyShopAdmin.iOS
 
 				var marker = new Marker()
 				{
-					Title = string.Format("Landmarks at: {0}, {1}", pos.Latitude, pos.Longitude),
-					Snippet = string.Format("{0} : {1} ; Submitted by {2}", feedback.ServiceType, feedback.Text, feedback.Name),
+                    Title = string.Format(" {0} \n Type: {1}", feedback.StoreName, landmarktypes[feedback.ServiceType]),
+                    Snippet = string.Format("The reported Landmark is at ({0}, {1}) \n Description: {2} \n Submitted by {3}", pos.Latitude, pos.Longitude, feedback.Text, feedback.Name),
 					Position = pos,
 					AppearAnimation = MarkerAnimation.Pop,
-
 					Tappable = true,
-
 					Map = mapView
-
-
 				};
 			}
 
-			
+            mapView.TappedMarker = (aMapView, aMarker) =>
+           {
+                var cam = new CameraPosition(aMarker.Position, 17, 0, 0);
+               mapView.Animate(cam);
+               UIAlertView alert = new UIAlertView();
+               alert.Title = aMarker.Title;
+               alert.AddButton("Back");
+               alert.AddButton("Street View");
+               alert.CancelButtonIndex = 0;
+                alert.Message = aMarker.Snippet;
+               //alert.AlertViewStyle = UIAlertViewStyle.PlainTextInput;
+               alert.Clicked += (object s, UIButtonEventArgs ev) =>
+               {
+                   if (ev.ButtonIndex != 0)
+                   {
+                        _feedbackMapPage.NavigateToStreetView(aMarker.Position.Latitude, aMarker.Position.Longitude);
+                   }
+
+               };
+               alert.Show();
+               return true;
+           };
+
 
 		}
 

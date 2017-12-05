@@ -83,8 +83,8 @@
 	            <x:String>Buidings Entrance</x:String>
                 <x:String>Bus Stop</x:String>
                 <x:String>Round about</x:String>
-                <x:String>Crosswalk</x:String>
-	            <x:String>Traffic Signal</x:String>
+                <x:String>Traffic Signal</x:String>
+	            <x:String>Crosswalk</x:String>
 	            <x:String>Other</x:String>
       </Picker.Items>
         </Picker>
@@ -164,6 +164,12 @@
 	</Grid>
 
 	</ScrollView>
+    <Button 
+            x:Name="StreetViewButton"
+            BackgroundColor="#3498DB"
+            BorderRadius="0"
+            TextColor="White" 
+            Text="StreetView"/>
 	<Button 
 			x:Name="ButtonCall"
 			BackgroundColor="#3498DB"

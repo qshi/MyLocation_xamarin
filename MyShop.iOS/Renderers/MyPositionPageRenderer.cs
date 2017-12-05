@@ -237,10 +237,10 @@ namespace MyShop.iOS
 
 			landmarktypes = new List<string>();
 			landmarktypes.Add("Work Zone");
-			landmarktypes.Add("Bus Stop");
-			landmarktypes.Add("Building Entrance");
+            landmarktypes.Add("Building Entrance");
+            landmarktypes.Add("Bus Stop");
 			landmarktypes.Add("Round About");
-			landmarktypes.Add("Crossroad");
+			landmarktypes.Add("Crosswalk");
 			landmarktypes.Add("Others");
 
             //mapView.TappedMarker = (aMapView, aMarker) =>

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Position Admin</string>
+	<string>Admin App</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.refractored.positionadmin</string>
 	<key>CFBundleShortVersionString</key>
@@ -61,6 +61,6 @@
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>CFBundleName</key>
-	<string>Position Admin</string>
+	<string>Admin App</string>
 </dict>
 </plist>

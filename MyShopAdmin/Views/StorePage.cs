@@ -80,6 +80,7 @@ namespace MyShopAdmin
             version.Items.Add("Building Entrance");
             version.Items.Add("Bus Stop");
 			version.Items.Add("Round About");
+            version.Items.Add("Crosswalk");
 			version.Items.Add("Traffic Signal");
 			version.Items.Add("Others");
 			version.SelectedIndex = Store.LandmarksType;
@@ -107,20 +108,20 @@ namespace MyShopAdmin
 						var parse2 = double.TryParse(longitude.Text.Trim(), out lng);
 						Store.Longitude = lng;
 						Store.Latitude = lat;
-						Store.MondayOpen = mondayOpen.Text.Trim();
-						Store.MondayClose = mondayClose.Text.Trim();
-						Store.TuesdayOpen = tuesdayOpen.Text.Trim();
-						Store.TuesdayClose = tuesdayClose.Text.Trim();
-						Store.WednesdayOpen = wednesdayOpen.Text.Trim();
-						Store.WednesdayClose = wednesdayClose.Text.Trim();
-						Store.ThursdayOpen = thursdayOpen.Text.Trim();
-						Store.ThursdayClose = thursdayClose.Text.Trim();
-						Store.FridayOpen = fridayOpen.Text.Trim();
-						Store.FridayClose = fridayClose.Text.Trim();
-						Store.SaturdayOpen = saturdayOpen.Text.Trim();
-						Store.SaturdayClose = saturdayClose.Text.Trim();
-						Store.SundayOpen = sundayOpen.Text.Trim();
-						Store.SundayClose = sundayClose.Text.Trim();
+                        Store.MondayOpen = (mondayOpen == null)? "8am" : mondayOpen.Text.Trim();
+                        Store.MondayClose = (mondayClose == null) ? "5pm" : mondayClose.Text.Trim();
+                        Store.TuesdayOpen = (tuesdayOpen == null) ? "8am" : tuesdayOpen.Text.Trim();
+                        Store.TuesdayClose = (tuesdayClose == null) ? "5pm" : tuesdayClose.Text.Trim();
+                        Store.WednesdayOpen = (wednesdayOpen == null) ? "8am" : wednesdayOpen.Text.Trim();
+                        Store.WednesdayClose = (wednesdayClose == null) ? "5pm" : wednesdayClose.Text.Trim();
+                        Store.ThursdayOpen = (thursdayOpen == null) ? "8am" : thursdayOpen.Text.Trim();
+                        Store.ThursdayClose = (thursdayClose == null) ? "5pm" : thursdayClose.Text.Trim();
+                        Store.FridayOpen = (fridayOpen == null) ? "8am" : fridayOpen.Text.Trim();
+                        Store.FridayClose = (fridayClose == null) ? "5pm" : fridayClose.Text.Trim();
+                        Store.SaturdayOpen = (saturdayOpen == null) ? "8am" : saturdayOpen.Text.Trim();
+                        Store.SaturdayClose = (saturdayClose == null) ? "5pm" : saturdayClose.Text.Trim();
+                        Store.SundayOpen = (sundayOpen == null) ? "8am" : sundayOpen.Text.Trim();
+                        Store.SundayClose = (sundayClose == null) ? "5pm" : sundayClose.Text.Trim();
 
 						Store.LandmarksType = version.SelectedIndex;
 						Store.Landmarks = version.Items[version.SelectedIndex];
@@ -139,13 +140,14 @@ namespace MyShopAdmin
 						if (isNew)
 						{
 							await dataStore.AddStoreAsync(Store);
+                            Store.ISNew = false;
 						}
 						else
 						{
 							await dataStore.UpdateStoreAsync(Store);
 						}
 
-						await DisplayAlert("Saved", "Please refresh iBeacons list", "OK");
+						await DisplayAlert("Saved", "Please refresh landmarks list", "OK");
 						await Navigation.PopAsync();
 					})
 			});
@@ -176,10 +178,10 @@ namespace MyShopAdmin
 							{
 								Text="Select Location"
 							}),
-						(detectLatLong = new TextCell()
-							{
-								Text="Detect Lat/Long"
-							})
+						//(detectLatLong = new TextCell()
+							//{
+							//	Text="Detect Lat/Long"
+							//})
 					},
 
                     new TableSection ("Image") {
@@ -232,20 +234,20 @@ namespace MyShopAdmin
 				image.Source = ImageSource.FromUri(new Uri(imageUrl.Text));
 			};
 
-			detectLatLong.Tapped += async (sender, e) =>
-			{
-				var coder = new Xamarin.Forms.Maps.Geocoder();
-				var oldTitle = Title;
-				Title = "Please wait...";
-				var locations = await coder.GetPositionsForAddressAsync(streetAddress.Text + " " + city.Text + ", " + state.Text + " " + zipCode.Text + " " + country.Text);
-				Title = oldTitle;
-				foreach (var location in locations)
-				{
-					latitude.Text = location.Latitude.ToString();
-					longitude.Text = location.Longitude.ToString();
-					break;
-				}
-			};
+			//detectLatLong.Tapped += async (sender, e) =>
+			//{
+			//	var coder = new Xamarin.Forms.Maps.Geocoder();
+			//	var oldTitle = Title;
+			//	Title = "Please wait...";
+			//	var locations = await coder.GetPositionsForAddressAsync(streetAddress.Text + " " + city.Text + ", " + state.Text + " " + zipCode.Text + " " + country.Text);
+			//	Title = oldTitle;
+			//	foreach (var location in locations)
+			//	{
+			//		latitude.Text = location.Latitude.ToString();
+			//		longitude.Text = location.Longitude.ToString();
+			//		break;
+			//	}
+			//};
 			scaniBeacon.Tapped += async (sender, e) =>
 			{
 				var myNextPage = new BLEViewPage(ViewModel);
