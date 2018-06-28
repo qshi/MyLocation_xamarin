@@ -6,6 +6,8 @@ using System.Net;
 using System.Collections;
 using System.IO;
 using System.Linq;
+using AVFoundation;
+using MoreLinq;
 
 using C5;
 using Xamarin.Forms;
@@ -110,7 +112,7 @@ namespace MyShop.iOS
 	public class MyPositionPageRenderer : PageRenderer
 	{
 		MapView mapView;
-		private MapDelegate mapDelegate;
+		//private MapDelegate mapDelegate;
 		Dictionary<string, Store> landmarkbeacon;
 		Dictionary<string, List<int>> beaconrssilist;
 		List<Marker> markers;
@@ -128,6 +130,9 @@ namespace MyShop.iOS
         //bool isSelectingDestination;
         Dictionary<Marker, Store> landmarkMarkerInfo;
         int countShouldUpdateCamera;
+        int countShouldUpdateNearbyLm;
+        //int mindist;
+        Dictionary<Store, List<Tuple<Store,string>>> childrenLandmarks;
 
 		/* serach box ini */
 		UISearchBar searchBar;
@@ -141,6 +146,11 @@ namespace MyShop.iOS
 		public event PlaceSelected PlaceSelected;
 
 		CLLocationManager iPhoneLocationManager = null;
+        List<Google.Maps.Polyline> Lines;
+        string speakText;
+        string distanceVoiceOver;
+        string bleVoiceOver;
+        AVSpeechSynthesizer speechSynthesizer;
 
 		//GPS
 		double myheading;
@@ -181,59 +191,90 @@ namespace MyShop.iOS
 			ReceivedBleAvgRssi = new Dictionary<string, double>();
 			beaconrssilist = new Dictionary<string, List<int>>();
             myRecentLocation = new Queue();
+            //mindist = int.MaxValue;
+
             Variables.isSelectingDestination = false;
+            speakText = "";
+            distanceVoiceOver = "";
+            bleVoiceOver = "";
+            speechSynthesizer = new AVSpeechSynthesizer();
+
             //Variables.destinationMarker = new Marker();
             landmarkMarkerInfo = new Dictionary<Marker, Store>();
             countShouldUpdateCamera = 0;
+            countShouldUpdateNearbyLm = 0;
 			apiKey = "AIzaSyApVhhHzhJF59Qbp3SWmyVaGtKVvx3lhqU";
+            childrenLandmarks = new Dictionary<Store, List<Tuple<Store, string>>>();
 		     
 			CameraPosition camera = CameraPosition.FromCamera(latitude: 42.392262,
 														  longitude: -72.526992, zoom: 17);
-			mapView = MapView.FromCamera(CGRect.Empty, camera);
+            mapView = MapView.FromCamera(new RectangleF(0, 0, 375, 603), camera);
 			mapView.MyLocationEnabled = true;
 			mapView.Settings.MyLocationButton = true;
 			mapView.Settings.CompassButton = true;
 			mapView.Settings.SetAllGesturesEnabled(true);
 			//Init MapDelegate
-			mapDelegate = new MapDelegate(mapView);
-			mapView.Delegate = mapDelegate;
-			View = mapView;
+			//mapDelegate = new MapDelegate(mapView);
+			//mapView.Delegate = mapDelegate;
+			//View = mapView;
 
 			BLEinstructionview = new UITextView()
 			{
 				Text = "No BLE signal",
 				Editable = false,
-				Frame = new CGRect(0, 40, w/2 - 30, h/2 + 15)
+				Frame = new CGRect(0, 40, w/2 - 30, h/2 + 15),
+                AdjustsFontForContentSizeCategory = true
 			};
 
 			GPSinstructionview = new UITextView()
 			{
 				Text = "No GPS signal",
 				Editable = false,
-				Frame = new CGRect(0, 0, w - 45, h),
+                Font = UIFont.FromName("Helvetica Neue", 17),
+                Frame = new CGRect(0, maphei / 2 - 30, w, maphei / 2-15),
+                BackgroundColor = UIColor.FromWhiteAlpha(1f, 0.7f),
                 AdjustsFontForContentSizeCategory = true
 			};
 
-            searchNearby = UIButton.FromType(UIButtonType.Custom);
-            searchNearby.SetImage(UIImage.FromFile("nearestplace.png"), UIControlState.Normal);
-            //searchNearby.SetTitleColor(UIColor.LightGray, UIControlState.Disabled);
-            searchNearby.Frame = new CGRect(w - 65, 0, 70, h);
-            searchNearby.TouchUpInside += delegate {
-                displayNearestLandmarkInfo();
+            searchNearby = UIButton.FromType(UIButtonType.RoundedRect);
+            //searchNearby.SetImage(UIImage.FromFile("nearestplace.png"), UIControlState.Normal);
+            searchNearby.IsAccessibilityElement = true;
+           
+            searchNearby.SetTitle("Instructions", UIControlState.Normal);
+            searchNearby.TitleLabel.Font = UIFont.FromName("Helvetica-Bold", 20f);
+            //searchNearby.SetTitleColor(UIColor.Blue, UIControlState.Normal);
+            searchNearby.Frame = new CGRect(10, maphei-100, w-10, 15);
+            searchNearby.TitleLabel.Hidden = false;
+            searchNearby.TouchUpInside += async delegate{
+                //displayNearestLandmarkInfo();
+                await playInstructions();
                 //searchCurrentLocationNearby();
              };
 
             Nearbyinstructionview = new UITextView()
             {
                 Text = "No nearby place",
+                IsAccessibilityElement = true,
+                AccessibilityTraits = UIAccessibilityTrait.Header | UIAccessibilityTrait.Selected,
                 Editable = false,
-                Frame = new CGRect(0, maphei - 180, w - 70, 120),
+                Font = UIFont.FromName("Helvetica Neue", 17),
+                Frame = new CGRect(5, 0, w-10, maphei / 2 - 30),
+                BackgroundColor = UIColor.FromWhiteAlpha(1f, 0.7f),
                 AdjustsFontForContentSizeCategory = true
             };
 
+
+            //View = Nearbyinstructionview;
             View.AddSubview(Nearbyinstructionview);
-            View.AddSubview(GPSinstructionview);
-            View.AddSubview(searchNearby);
+            if (positionpage.Destination != null) {
+                Nearbyinstructionview.Frame = new CGRect(5, 0, w - 10, maphei);
+                View.AddSubview(searchNearby);
+            } else {
+                View.AddSubview(GPSinstructionview);
+            }
+            View.AddSubview(mapView);
+            View.SendSubviewToBack(mapView);
+            searchNearby.Hidden = true;
 
 			landmarktypes = new List<string>();
 			landmarktypes.Add("Work Zone");
@@ -241,7 +282,8 @@ namespace MyShop.iOS
             landmarktypes.Add("Bus Stop");
 			landmarktypes.Add("Round About");
 			landmarktypes.Add("Crosswalk");
-			landmarktypes.Add("Others");
+            landmarktypes.Add("Traffic Signal");
+            landmarktypes.Add("Knowles Engineering Building");
 
             //mapView.TappedMarker = (aMapView, aMarker) =>
             //{
@@ -373,7 +415,7 @@ namespace MyShop.iOS
 			mapView.StartRendering();
 
 			//CoordinateBounds bounds = null;
-
+            Lines = new List<Google.Maps.Polyline>();
 
 			foreach (var landmarks in positionpage.Landmarks)
 			{
@@ -382,6 +424,40 @@ namespace MyShop.iOS
 				CLLocationCoordinate2D pos;
 				pos.Latitude = landmarks.Latitude;
 				pos.Longitude = landmarks.Longitude;
+
+                foreach (var landmarks2 in positionpage.Landmarks)
+                {
+                    if (landmarks2 != landmarks) {
+                        if (landmarks.MondayOpen == landmarks2.StreetAddress) {
+                            if (!childrenLandmarks.ContainsKey(landmarks)) childrenLandmarks.Add(landmarks, new List<Tuple<Store, string>>());
+                            childrenLandmarks[landmarks].Add(Tuple.Create(landmarks2, landmarks.MondayClose));
+                        }
+                        if (landmarks.TuesdayOpen == landmarks2.StreetAddress) {
+                            if (!childrenLandmarks.ContainsKey(landmarks)) childrenLandmarks.Add(landmarks, new List<Tuple<Store, string>>());
+                            childrenLandmarks[landmarks].Add(Tuple.Create(landmarks2, landmarks.TuesdayClose));
+                        }
+                        if (landmarks.WednesdayOpen == landmarks2.StreetAddress) {
+                            if (!childrenLandmarks.ContainsKey(landmarks)) childrenLandmarks.Add(landmarks, new List<Tuple<Store, string>>());
+                            childrenLandmarks[landmarks].Add(Tuple.Create(landmarks2, landmarks.WednesdayClose));
+                        }
+                        if (landmarks.ThursdayOpen == landmarks2.StreetAddress){
+                            if (!childrenLandmarks.ContainsKey(landmarks)) childrenLandmarks.Add(landmarks, new List<Tuple<Store, string>>());
+                            childrenLandmarks[landmarks].Add(Tuple.Create(landmarks2, landmarks.ThursdayClose));
+                        } 
+                        if (landmarks.FridayOpen == landmarks2.StreetAddress) {
+                            if (!childrenLandmarks.ContainsKey(landmarks)) childrenLandmarks.Add(landmarks, new List<Tuple<Store, string>>());
+                            childrenLandmarks[landmarks].Add(Tuple.Create(landmarks2, landmarks.FridayClose));
+                        }
+                        if (landmarks.SaturdayOpen == landmarks2.StreetAddress) {
+                            if (!childrenLandmarks.ContainsKey(landmarks)) childrenLandmarks.Add(landmarks, new List<Tuple<Store, string>>());
+                            childrenLandmarks[landmarks].Add(Tuple.Create(landmarks2, landmarks.SaturdayClose));
+                        }
+                        if (landmarks.SundayOpen == landmarks2.StreetAddress) {
+                            if (!childrenLandmarks.ContainsKey(landmarks)) childrenLandmarks.Add(landmarks, new List<Tuple<Store, string>>());
+                            childrenLandmarks[landmarks].Add(Tuple.Create(landmarks2, landmarks.MondayClose));
+                        }
+                    }
+                }
 
 				if (!landmarkbeacon.ContainsKey(fullid))
 				{
@@ -400,6 +476,12 @@ namespace MyShop.iOS
 					Tappable = true,
 					Map = mapView
 				};
+
+                if (positionpage.Destination != null && landmarks == positionpage.Destination)
+                {
+                    Variables.destinationMarker = testMarker;
+                    Variables.isSelectingDestination = true;
+                }
                 //markers.Add(testMarker);
                 landmarkMarkerInfo[testMarker] = landmarks;
 			}
@@ -413,27 +495,58 @@ namespace MyShop.iOS
 			iPhoneLocationManager.LocationsUpdated += (sender, e) =>
 			{
 				myposition = e.Locations[0];
-                if (countShouldUpdateCamera == 15) {
+
+                double nearestDistance = 500000;
+                foreach (var landmarks in positionpage.Landmarks)
+                {
+                    CLLocation landmarkPosition = new CLLocation(landmarks.Latitude, landmarks.Longitude);
+                    //if (landmarks.LandmarksType == 5) continue; // skip indoor beacons
+
+                    var landmarktype = landmarktypes[landmarks.LandmarksType];
+
+                    if (myposition != null && landmarkPosition != null)
+                    {
+                        double distance = myposition.DistanceFrom(landmarkPosition);
+                        if (nearestDistance > distance)
+                        {
+                            nearestDistance = distance;
+                            nearestLandmark = landmarks;
+                        }
+                    }
+                }
+
+                if (countShouldUpdateCamera == 8) {
                     countShouldUpdateCamera = 0;
                 }
                 if (countShouldUpdateCamera == 0)
                 {
                     var cam = new CameraPosition(myposition.Coordinate, 18, 0, 0);
                     mapView.Animate(cam);
+                    if (positionpage.Destination != null && landmarkMarkerInfo[Variables.destinationMarker] != null) {
+                        //getRoutesToDestination(Variables.destinationMarker);
+                    }
                 }
                 countShouldUpdateCamera++;
                 //mapView.Animate(cam);
                 if (myRecentLocation.Count > 5) {
                     myRecentLocation.Dequeue();
+
                 }
+
                 myRecentLocation.Enqueue(myposition);
-                if (nearestLandmark != null && !Variables.isSelectingDestination) {
+
+                if (nearestLandmark != null && (ReceivedBleAvgRssi.Count < 2 || myposition.HorizontalAccuracy < 10))
+                {
                     updateNearbyinstructionview(nearestLandmark);
-                } else if (Variables.isSelectingDestination && Variables.destinationMarker != null) {
-                    if (landmarkMarkerInfo[Variables.destinationMarker] != null) {
-                        updateNearbyinstructionview(landmarkMarkerInfo[Variables.destinationMarker]);
-                    }
                 }
+
+                //if (nearestLandmark != null && !Variables.isSelectingDestination && ReceivedBleAvgRssi.Count < 3) {
+                //    updateNearbyinstructionview(nearestLandmark);
+                //} else if (Variables.isSelectingDestination && Variables.destinationMarker != null) {
+                //    if (landmarkMarkerInfo[Variables.destinationMarker] != null && ReceivedBleAvgRssi.Count < 3) {
+                //        updateNearbyinstructionview(landmarkMarkerInfo[Variables.destinationMarker]);
+                //    }
+                //}
 
 				//if (myposition.HorizontalAccuracy > 15)
 				//{
@@ -464,7 +577,7 @@ namespace MyShop.iOS
 			iPhoneLocationManager.UpdatedHeading += (object sender, CLHeadingUpdatedEventArgs e) =>
 			{
 				myheading = e.NewHeading.MagneticHeading;
-                gpslocation(myposition);
+                //if(ReceivedBleAvgRssi.Count < 2 || myposition.HorizontalAccuracy < 10) gpslocation(myposition);
 				//if (GPSinstructionview.Text == "") GPSinstructionview.Text = "Your heading:" + myheading.ToString();
 				//else {
 				//	int headingidx = GPSinstructionview.Text.LastIndexOf("Your heading");
@@ -487,6 +600,7 @@ namespace MyShop.iOS
 		{
 			mapView.StopRendering();
 			base.ViewWillDisappear(animated);
+            if (speechSynthesizer.Speaking) speechSynthesizer.StopSpeaking(AVSpeechBoundary.Immediate);
 		}
 
 		public override void ViewDidAppear(bool animated)
@@ -504,6 +618,12 @@ namespace MyShop.iOS
 			if (CLLocationManager.HeadingAvailable) iPhoneLocationManager.StopUpdatingHeading();
 			iPhoneLocationManager.StopUpdatingLocation();
 		}
+
+        public override void MotionBegan(UIEventSubtype motion, UIEvent evt) {
+            if (motion == UIEventSubtype.MotionShake) {
+                displayNearestLandmarkInfo();
+            }
+        }
 
 		public void StartIBeaconReciever()
 		{
@@ -531,18 +651,20 @@ namespace MyShop.iOS
 				if (eArgs.EventType == BeaconEventType.Broadcast)
 				{
 					var beacon = eArgs.Beacon;
-					//AddOrUpdateBeacon(beacon);
+					AddOrUpdateBeacon(beacon);
 				}
 			}
 		}
 
 		private void AddOrUpdateBeacon(GBeacon beacon)
 		{
+            countShouldUpdateNearbyLm++;
             if (beacon.Major.ToString() == "999") return;  // 999 --> virtual BLE
 
 		 	var beaconFullId = beacon.Major + "-" + beacon.Minor;
 			var rssi = beacon.Rssi;
 			var timestamp = DateTime.Now.ToString();// set zero
+
 
 			if (rssi > -90 && landmarkbeacon.ContainsKey(beaconFullId))   //Started BLE localization...
 			{
@@ -555,7 +677,7 @@ namespace MyShop.iOS
 					beaconrssilist.Add(beaconFullId, rssilist);
 				}
 				else {
-					if (beaconrssilist[beaconFullId].Count < 10)
+					if (beaconrssilist[beaconFullId].Count < 6)
 					{
 						beaconrssilist[beaconFullId].Add(rssi);
 					}
@@ -575,50 +697,81 @@ namespace MyShop.iOS
 					ReceivedBleAvgRssi.Add(beaconFullId, avgrssi);
 				}
 
-				var cur_landmarktype = landmarktypes[landmarkbeacon[beaconFullId].LandmarksType];
-				double avg_rssi = ReceivedBleAvgRssi[beaconFullId];
-				var DistanceMeter = 0.30480000000122 * (Math.Pow(10, (-avg_rssi - 63.5379) / (10 * 2.086)) * 3);
-				
-				if (beacon.Proximity == GProximity.Far)
-				{
-					CLLocation landmark = new CLLocation(landmarkbeacon[beaconFullId].Latitude, landmarkbeacon[beaconFullId].Longitude);
-					BLEinstructionview.Text = "BLE detected that you are close to: " + landmarkbeacon[beaconFullId].StreetAddress + " " + cur_landmarktype + "\n";
-					BLEinstructionview.Text += "Distance(meter): " + DistanceMeter.ToString() + "\n";
-					//instructionview.Text += "Direction: " + Direction(mylocation, landmark) + "\n";
-					//BLEinstructionview.Text += "Your heading:" + myheading;
-				}
-				if (beacon.Proximity == GProximity.Near || beacon.Proximity == GProximity.Immediate)
-				{
-					if (positionpage.Landmarks != null)
-					{
-						CLLocation landmark = new CLLocation(landmarkbeacon[beaconFullId].Latitude, landmarkbeacon[beaconFullId].Longitude);
-						BLEinstructionview.Text = "BLE detected that you are at: " + landmarkbeacon[beaconFullId].StreetAddress + " " + cur_landmarktype + "\n";
-						BLEinstructionview.Text += "Distance(meter): " + DistanceMeter.ToString() + "\n";
-						//instructionview.Text += "Direction: " + Direction(mylocation, landmark) + "\n";
-						//BLEinstructionview.Text += "Your heading:" + myheading;
-					}
-					//Console.WriteLine(beaconFullId + ": Near BLE!: " + rssi + "dB  ");
-				}
-				if (beacon.Proximity == GProximity.Unknown)
-				{
-					CLLocation landmark = new CLLocation(landmarkbeacon[beaconFullId].Latitude, landmarkbeacon[beaconFullId].Longitude);
-					BLEinstructionview.Text = "BLE detected that you are far away from: " + landmarkbeacon[beaconFullId].StreetAddress + " " + cur_landmarktype + "\n";
-					Console.WriteLine(beaconFullId + ": Unknow BLE!: " + rssi + "dB  ");
-				}
 
-				//if (myposition.HorizontalAccuracy > 9)
-				//{
-					//if (rssi > -75)
-					//{
-     //                   //
-					//	var landmarktype = landmarktypes[landmarkbeacon[beaconFullId].LandmarksType];
-					//	instructionview.Text = "BLE detected that you are at: " + landmarkbeacon[beaconFullId].StreetAddress + " " + landmarktype + "\n";
-					//	instructionview.Text += "Your heading:" + myheading;
-					//}
-					//else if (ReceivedBleAvgRssi.ContainsKey(beaconFullId))
-						//BleOutdoorNotif(beaconFullId, myposition);
-					
-				//	indoorlocalization();
+                double avg_rssi = ReceivedBleAvgRssi[beaconFullId];
+                var DistanceMeter = Convert.ToInt32(0.30480000000122 * (Math.Pow(10, (-avg_rssi - 63.5379) / (10 * 2.086)) * 3));
+
+                var maxRssiFullId = ReceivedBleAvgRssi.MaxBy(kvp => kvp.Value).Key;
+                //var cur_landmarktype = landmarktypes[landmarkbeacon[maxRssiFullId].LandmarksType];
+                var cur_landmarktype = landmarkbeacon[maxRssiFullId].Landmarks;
+                //mindist = DistanceMeter;
+                if (ReceivedBleAvgRssi.Count >= 2 && myposition.HorizontalAccuracy >= 10) {
+                    nearestLandmark = landmarkbeacon[maxRssiFullId];
+                    CLLocation landmark = new CLLocation(landmarkbeacon[maxRssiFullId].Latitude, landmarkbeacon[maxRssiFullId].Longitude);
+
+                    searchNearby.Hidden = false;
+                    UIAccessibility.PostNotification(UIAccessibilityPostNotification.LayoutChanged, searchNearby);
+
+                    if (positionpage.Destination != null && searchNearby.Hidden) {
+                        Nearbyinstructionview.Text = "Hello! you are near " + nearestLandmark.StreetAddress + "indoors, please find the nearest landmark and click the Instruction button to start navigation";
+                        UIAccessibility.PostNotification(UIAccessibilityPostNotification.Announcement, new NSString(Nearbyinstructionview.Text));
+                    }
+
+                    if (positionpage.Destination == null) {
+                        if (beacon.Proximity == GProximity.Far)
+                        {
+
+                            //CLLocation landmark = new CLLocation(landmarkbeacon[beaconFullId].Latitude, landmarkbeacon[beaconFullId].Longitude);
+                            Nearbyinstructionview.Text = "BLE detected that you are close to: " + nearestLandmark.StreetAddress + "\n";
+                            Nearbyinstructionview.Text += "Distance(meter): " + DistanceMeter.ToString() + "\n";
+                            //instructionview.Text += "Direction: " + Direction(mylocation, landmark) + "\n";
+                            //BLEinstructionview.Text += "Your heading:" + myheading;
+                        }
+                        if (beacon.Proximity == GProximity.Near || beacon.Proximity == GProximity.Immediate)
+                        {
+                            if (positionpage.Landmarks != null)
+                            {
+                                //CLLocation landmark = new CLLocation(landmarkbeacon[beaconFullId].Latitude, landmarkbeacon[beaconFullId].Longitude);
+                                Nearbyinstructionview.Text = "BLE detected that you are at: " + nearestLandmark.StreetAddress + "\n";
+                                Nearbyinstructionview.Text += "Distance(meter): " + DistanceMeter.ToString() + "\n";
+                                if (nearestLandmark == positionpage.Destination)
+                                {
+                                    Nearbyinstructionview.Text += "You have arrived your destination " + "\n";
+                                }
+                                //instructionview.Text += "Direction: " + Direction(mylocation, landmark) + "\n";
+                                //BLEinstructionview.Text += "Your heading:" + myheading;
+                            }
+                            //Console.WriteLine(beaconFullId + ": Near BLE!: " + rssi + "dB  ");
+                        }
+                        if (beacon.Proximity == GProximity.Unknown)
+                        {
+                            //CLLocation landmark = new CLLocation(landmarkbeacon[beaconFullId].Latitude, landmarkbeacon[beaconFullId].Longitude);
+                            Nearbyinstructionview.Text = "BLE detected that you are far away from: " + nearestLandmark.StreetAddress + "\n";
+                            //Console.WriteLine(beaconFullId + ": Unknow BLE!: " + rssi + "dB  ");
+                        }
+                        if (positionpage.Destination != null)
+                        {
+                            Nearbyinstructionview.Text += "Your Destination: " + positionpage.Destination.StreetAddress;
+                        }
+
+                        var orderedRssiFullId = ReceivedBleAvgRssi.OrderByDescending(kvp => kvp.Value);
+                        GPSinstructionview.Text = "";
+                        foreach (var fullid in orderedRssiFullId)
+                        {
+                            var dist = Convert.ToInt32(0.30480000000122 * (Math.Pow(10, (-ReceivedBleAvgRssi[fullid.Key] - 63.5379) / (10 * 2.086)) * 3));
+                            var lmtype = landmarktypes[landmarkbeacon[fullid.Key].LandmarksType];
+                            GPSinstructionview.Text += "You are close to: " + landmarkbeacon[fullid.Key].StreetAddress + " " + lmtype + "\n";
+                            GPSinstructionview.Text += "Distance:(m) " + dist + "\n";
+                            //GPSinstructionview.Text += "Direction: " + Direction(mylocation, landmarkPosition) + "\n";
+                            GPSinstructionview.Text += "Info: " + landmarkbeacon[fullid.Key].Country + "\n";
+                            GPSinstructionview.Text += "-------------------------------------------------------" + "\n";
+                        }
+                    }
+
+
+                    //indoorlocalization();
+                }
+
 				//}
 			}
 		}
@@ -866,7 +1019,7 @@ namespace MyShop.iOS
 				BLEinstructionview.Text = "BLE detected that you are close to: " + landmarkbeacon[fullid].StreetAddress + " " + landmarktype + "\n";
 				BLEinstructionview.Text += "Distance(meter): " + DistanceMeter.ToString() + "\n";
 				//instructionview.Text += "Direction: " + Direction(mylocation, landmark) + "\n";
-				BLEinstructionview.Text += "Your heading:" + myheading;
+				//BLEinstructionview.Text += "Your heading:" + myheading;
 			}
 			//Console.WriteLine("DIS " + DistanceMeter + "full " + fullid + "type " + instructionview.Text);
 		}
@@ -874,26 +1027,133 @@ namespace MyShop.iOS
 		//------------------------------------------------------------------------------------------------------------
         void updateNearbyinstructionview(Store landmark) {
             if (landmark == null) {
-                Nearbyinstructionview.Text = "No nearby places";
+                Nearbyinstructionview.Text = "Waiting for searching landmarks...";
                 return;
             }
+            searchNearby.Hidden = true;
+            Nearbyinstructionview.AccessibilityLabel = Nearbyinstructionview.Text;
             CLLocation landmarkPosition = new CLLocation(landmark.Latitude, landmark.Longitude);
             var myPreLocation = (CLLocation)myRecentLocation.Peek();
             double distance = myposition.DistanceFrom(landmarkPosition);
-            if (myPreLocation.DistanceFrom(landmarkPosition) > distance) {
-                if (distance < 10)
-                {
-                    Nearbyinstructionview.Text = "You are approaching this Landmark" + "\n";
-                } else {
-                    Nearbyinstructionview.Text = "You are moving towards " + landmark.StreetAddress + "\n";
-                }
-                string LRdirection = LeftRightDirection(myposition, landmarkPosition);
-                if (LRdirection != "") Nearbyinstructionview.Text += "It is at your " + LRdirection + "\n";
-            } else {
-                Nearbyinstructionview.Text = "You are moving away from " + landmark.StreetAddress + "\n";
+            string distanceText = "The landmark is " + Convert.ToInt32(distance) + "meters ";
+            string directionText = "";
+
+            if (myRecentLocation.Count < 5)
+            {
+                Nearbyinstructionview.Text = "Hello! you are near " + landmark.StreetAddress + "outdoors, please find the nearest landmark to start navigation";
+                UIAccessibility.PostNotification(UIAccessibilityPostNotification.Announcement, new NSString(Nearbyinstructionview.Text));
+                return;
             }
-            Nearbyinstructionview.Text += "Info: " + landmark.Country + "\n";
-            Nearbyinstructionview.Text += "Distance: " + (double)Convert.ToInt32(distance * 100) / 100;
+            if (distance < 10)
+            {
+                Nearbyinstructionview.Text = "You are approaching " + landmark.StreetAddress + ",\n";
+                string LRdirection = LeftRightDirection(myposition, landmarkPosition);
+                directionText = (LRdirection != "") ? distanceText + "to your " + LRdirection + ",\n" : "";
+
+                var navigationTips = navigation(landmark);
+
+                if (Nearbyinstructionview.Text != speakText && searchNearby.Hidden == true) //&& ReceivedBleAvgRssi.Count < 3
+                {
+                    //speak(Nearbyinstructionview.Text + distanceText + directionText);
+                    UIAccessibility.PostNotification(UIAccessibilityPostNotification.Announcement, new NSString(Nearbyinstructionview.Text + directionText + navigationTips.Item2));
+                }
+                speakText = Nearbyinstructionview.Text;
+
+                if (LRdirection != "") Nearbyinstructionview.Text += distanceText + "to your " + LRdirection + ",\n";
+                Nearbyinstructionview.Text += navigationTips.Item2;
+
+            } else if (myPreLocation.DistanceFrom(landmarkPosition) > distance) {
+                Nearbyinstructionview.Text = "You are moving towards " + landmark.StreetAddress + ",\n";
+                directionText = Direction(myposition, landmarkPosition) + ",\n";
+                if (Nearbyinstructionview.Text != speakText && searchNearby.Hidden == true)
+                {
+                    UIAccessibility.PostNotification(UIAccessibilityPostNotification.Announcement, new NSString(Nearbyinstructionview.Text + distanceText + directionText + landmark.Country));
+                    //speak(Nearbyinstructionview.Text + distanceText + directionText);
+                }
+                speakText = Nearbyinstructionview.Text;
+
+                Nearbyinstructionview.Text += distanceText + Direction(myposition, landmarkPosition) + ",\n";
+                //Nearbyinstructionview.Text += distanceText;
+                //Nearbyinstructionview.Text += "Info: " + landmark.Country + "\n";
+            } else {
+                string LRdirection = LeftRightDirection(myposition, landmarkPosition);
+                directionText = (LRdirection != "") ? distanceText + "to your " + LRdirection + ",\n" : "";
+
+                var navigationTips = navigation(landmark);
+                CLLocation nextLandmarkPosition = new CLLocation(navigationTips.Item1.Latitude, navigationTips.Item1.Longitude);
+                double nextDistance = myposition.DistanceFrom(nextLandmarkPosition);
+                string nextDistanceText = "The landmark is " + Convert.ToInt32(nextDistance) + "meters ";
+                Nearbyinstructionview.Text = navigationTips.Item2 + ",\n" + distanceText + Direction(myposition, nextLandmarkPosition) + ",\n"; ;
+
+                //var nextStop = navigation(landmark).Item1;
+                //CLLocation nextlandmarkPosition = new CLLocation(nextStop.Latitude, nextStop.Longitude);
+                //Nearbyinstructionview.Text = "Your next stop is " + nextStop.StreetAddress + ",\n";
+                //Nearbyinstructionview.Text += "The landmark is " + Convert.ToInt32(distance) + "meter ";
+                //Nearbyinstructionview.Text += Direction(myposition, nextlandmarkPosition) + ",\n";
+
+                //Nearbyinstructionview.Text += "Info: " + nextStop.Country + "\n";
+                //Nearbyinstructionview.Text = "You are moving away from " + landmark.StreetAddress + ",\n";
+                //if (Nearbyinstructionview.Text != speakText)
+                //{
+                //    UIAccessibility.PostNotification(UIAccessibilityPostNotification.Announcement, new NSString(Nearbyinstructionview.Text));
+                //    //speak(Nearbyinstructionview.Text);
+                //}
+                //speakText = Nearbyinstructionview.Text;
+            }
+
+            //if (distanceVoiceOver != distanceText && (ReceivedBleAvgRssi.Count < 2 || myposition.HorizontalAccuracy < 10)) {
+            //    UIAccessibility.PostNotification(UIAccessibilityPostNotification.Announcement, new NSString(distanceText));
+            //    distanceVoiceOver = distanceText;
+            //}
+
+            //if (positionpage.Destination != null)
+            //{
+            //    Nearbyinstructionview.Text += "Your Destination: " + positionpage.Destination.StreetAddress;
+            //}
+        }
+
+        Tuple<Store, string> navigation(Store landmark) {
+            Tuple<Store,string> ans = null;
+            string navigationTips = "";
+            if (landmark != null && positionpage.Destination != null)
+            {
+
+                CLLocation desPosition = new CLLocation(positionpage.Destination.Latitude, positionpage.Destination.Longitude);
+
+                Tuple<Store, string> nextLandmark = null;
+                if (landmark == positionpage.Destination)
+                {
+                    navigationTips += "You have arrived the destination. " + "\n";
+                    ans = Tuple.Create(landmark, navigationTips);
+                }
+                else
+                {
+                    if (childrenLandmarks.ContainsKey(landmark) && childrenLandmarks[landmark] != null)
+                    {
+                        var nextStops = childrenLandmarks[landmark];
+                        double mindistance = Double.MaxValue;
+                        foreach (var stop in nextStops)
+                        {
+                            CLLocation nextLandmarkPosition = new CLLocation(stop.Item1.Latitude, stop.Item1.Longitude);
+                            var dist = desPosition.DistanceFrom(nextLandmarkPosition);
+                            if (dist < mindistance)
+                            {
+                                mindistance = dist;
+                                nextLandmark = stop;
+                            }
+                        }
+                    }
+                    if (nextLandmark != null)
+                    {
+                        CLLocation nextLandmarkPosition = new CLLocation(nextLandmark.Item1.Latitude, nextLandmark.Item1.Longitude);
+                        //var directionText = "Direction: " + Direction(myposition, nextLandmarkPosition) + ",\n";
+                        navigationTips += "Your next stop: " + nextLandmark.Item1.StreetAddress + ",\n";
+                        navigationTips += nextLandmark.Item2;
+                        ans = Tuple.Create(nextLandmark.Item1, navigationTips);
+                    }
+                }
+            }
+            return ans;
         }
 
         void displayNearestLandmarkInfo() {
@@ -901,11 +1161,11 @@ namespace MyShop.iOS
             if (nearestLandmark  != null) {
                 CLLocation landmarkPosition = new CLLocation(nearestLandmark.Latitude, nearestLandmark.Longitude);
                 UIAlertView alert = new UIAlertView();
-                alert.Title = "Nearest landmark: " + nearestLandmark.StreetAddress + " " + nearestLandmark.Landmarks;
+                alert.Title = "You're located at: " + nearestLandmark.StreetAddress + " " + nearestLandmark.Landmarks;
                 alert.AddButton("Cancel");
                 alert.AddButton("Show");
                 alert.CancelButtonIndex = 0;
-                alert.Message = "Distance(m): "+ myposition.DistanceFrom(landmarkPosition) + "\n" + "Info: " + nearestLandmark.Country + "\n" + " If you want to know more about this landmark, please click Show";
+                alert.Message = "Distance(m): "+ Convert.ToInt32(myposition.DistanceFrom(landmarkPosition)) + "\n" + "Info: " + nearestLandmark.Country + "\n" + " If you want to know more about this landmark, please click Show";
                 alert.Clicked += (object s, UIButtonEventArgs ev) =>
                 {
                     // handle click event here
@@ -917,6 +1177,78 @@ namespace MyShop.iOS
                 };
                 alert.Show();
             } 
+        }
+
+        async Task playInstructions()
+        {
+            var maxRssiFullId = ReceivedBleAvgRssi.MaxBy(kvp => kvp.Value).Key;
+            var cur_landmarktype = landmarkbeacon[maxRssiFullId].Landmarks;
+            double avg_rssi = ReceivedBleAvgRssi[maxRssiFullId];
+            var DistanceMeter = Convert.ToInt32(0.30480000000122 * (Math.Pow(10, (-avg_rssi - 63.5379) / (10 * 2.086)) * 3));
+
+            searchNearby.Hidden = false;
+            nearestLandmark = landmarkbeacon[maxRssiFullId];
+            CLLocation landmark = new CLLocation(landmarkbeacon[maxRssiFullId].Latitude, landmarkbeacon[maxRssiFullId].Longitude);
+            Nearbyinstructionview.Text = "You're at: " + nearestLandmark.StreetAddress + "\n";
+            Nearbyinstructionview.Text += "Distance(meter): " + DistanceMeter.ToString() + "\n";
+
+            if (nearestLandmark != null && positionpage.Destination != null)
+            {
+
+                CLLocation landmarkPosition = new CLLocation(positionpage.Destination.Latitude, positionpage.Destination.Longitude);
+
+                Tuple<Store, string> nextLandmark = null;
+                if (nearestLandmark == positionpage.Destination) {
+                    //UIAlertView alert = new UIAlertView();
+                    Nearbyinstructionview.Text += "You have arrived the destination ";
+                    //alert.AddButton("OK");
+                    //alert.CancelButtonIndex = 0;
+                    //alert.Show();
+                } else {
+                    if (childrenLandmarks.ContainsKey(nearestLandmark) && childrenLandmarks[nearestLandmark] != null)
+                    {
+                        var nextStops = childrenLandmarks[nearestLandmark];
+                        double mindistance = Double.MaxValue;
+                        foreach (var stop in nextStops)
+                        {
+                            CLLocation nextLandmarkPosition = new CLLocation(stop.Item1.Latitude, stop.Item1.Longitude);
+                            var distance = landmarkPosition.DistanceFrom(nextLandmarkPosition);
+                            if (distance < mindistance)
+                            {
+                                mindistance = distance;
+                                nextLandmark = stop;
+                            }
+                        }
+                    }
+                    if (nextLandmark != null)
+                    {
+                        //UIAlertView alert = new UIAlertView();
+                        CLLocation nextLandmarkPosition = new CLLocation(nextLandmark.Item1.Latitude, nextLandmark.Item1.Longitude);
+                        //var directionText = "Direction: " + Direction(myposition, nextLandmarkPosition) + ",\n";
+                        //if (ReceivedBleAvgRssi.Count >= 2 && myposition.HorizontalAccuracy >= 10) directionTextn= "";
+
+                        var navInstructionText = Nearbyinstructionview.Text;
+
+                        navInstructionText += "Your next stop: " + nextLandmark.Item1.StreetAddress + "\n";
+                        //alert.AddButton("OK");
+                        //alert.CancelButtonIndex = 0;
+                        navInstructionText +=  nextLandmark.Item2 + "\n";
+                        navInstructionText += "When you arrive the next landmark, please click the button to get updated instructions to your destintion " + positionpage.Destination.StreetAddress;
+                        Nearbyinstructionview.Text = navInstructionText;
+                    }
+                }
+
+                Console.Out.WriteLine($"Reached Post Notification: {Nearbyinstructionview.Text}");
+
+                await Task.Delay(200);
+
+                UIAccessibility.PostNotification(UIAccessibilityPostNotification.Announcement, new NSString(Nearbyinstructionview.Text));
+                //CLLocation landmarkPosition = new CLLocation(nearestLandmark.Latitude, nearestLandmark.Longitude);
+                //string instructions = nearestLandmark.Country;
+                //speak(instructions);
+
+
+             }
         }
 
         //void searchCurrentLocationNearby()
@@ -964,7 +1296,7 @@ namespace MyShop.iOS
 			if (positionpage.Landmarks != null)
 			{
                 GPSinstructionview.Text = "";
-                double nearestDistance = 50;
+                double nearestDistance = 500000;
 				foreach (var landmarks in positionpage.Landmarks)
 				{
 					CLLocation landmarkPosition = new CLLocation(landmarks.Latitude, landmarks.Longitude);
@@ -980,11 +1312,11 @@ namespace MyShop.iOS
                             nearestLandmark = landmarks;
                         }
                         if (distance < 35) {
-                            GPSinstructionview.Text += "GPS detected that you are close to: " + landmarks.StreetAddress + " " + landmarktype + "\n";
-                            GPSinstructionview.Text += "Distance:(m) " + (double)Convert.ToInt32(distance * 10) / 10 + "\n";
-                            GPSinstructionview.Text += "Direction: " + Direction(mylocation, landmarkPosition) + "\n";
+                            GPSinstructionview.Text += "You are close to: " + landmarks.StreetAddress + " " + landmarktype + "\n";
+                            GPSinstructionview.Text += "The landmark is " + Convert.ToInt32(distance) + "meters";
+                            GPSinstructionview.Text +=  Direction(mylocation, landmarkPosition) + "\n";
                             GPSinstructionview.Text += "Info: " + landmarks.Country + "\n";
-                            GPSinstructionview.Text += "----------------------------------------------------------------------" + "\n";
+                            GPSinstructionview.Text += "-------------------------------------------------------" + "\n";
                         }
 					}
 
@@ -993,6 +1325,7 @@ namespace MyShop.iOS
 				//if (!findnear) instructionview.Text = "Your heading:" + myheading+ "\n";
 			}
 		}
+
 
 		private double gpsbearing(CLLocation la, CLLocation lb)  // 0  90    0   -90   0  
 		{
@@ -1032,7 +1365,7 @@ namespace MyShop.iOS
 					if (myheading > 360 - landmarkbearing || myheading <= 90 - landmarkbearing) dir = "The landmark is on your right behind";
 					*/
 
-					return "Southeast" + "\n" + clockdirection(landmarkheading);
+                    return clockdirection(landmarkheading);
 				}
 
 				if (a.Coordinate.Longitude > b.Coordinate.Longitude)//west  D3
@@ -1043,10 +1376,10 @@ namespace MyShop.iOS
 						if (myheading > 270 - landmarkbearing || myheading <= -landmarkbearing) dir = "The landmark is on your left behind";
 						if (myheading > -landmarkbearing && myheading <= 90 - landmarkbearing) dir = "The landmark is on your right behind";
 						*/
-					return "Southwest" + "\n" + clockdirection(landmarkheading);
+                    return clockdirection(landmarkheading);
 				}
 
-				return "South" + "\n" + clockdirection(landmarkheading);
+                return clockdirection(landmarkheading);
 				
 
 			}
@@ -1063,7 +1396,7 @@ namespace MyShop.iOS
 					if (myheading > landmarkbearing + 90 && myheading < landmarkbearing + 180) dir = "The landmark is on your left behind";
 					if (myheading > landmarkbearing + 180 && myheading < landmarkbearing + 270) dir = "The landmark is on your right behind";
 					*/
-					return "Northeast" + "\n" + clockdirection(landmarkheading);
+                    return clockdirection(landmarkheading);
 				}
 				if (a.Coordinate.Longitude > b.Coordinate.Longitude)  //West    D4
 				{
@@ -1073,10 +1406,10 @@ namespace MyShop.iOS
 					if (myheading > landmarkbearing + 90 && myheading < landmarkbearing + 180) dir = "The landmark is on your left behind";
 					if (myheading > landmarkbearing + 180 && myheading < landmarkbearing + 270) dir = "The landmark is on your right behind";
 					*/
-					return "Northwest" + "\n" + clockdirection(landmarkheading);
+                    return clockdirection(landmarkheading);
 				}
 
-				return "North" + "\n" + clockdirection(landmarkheading);
+                return clockdirection(landmarkheading);
 
 			}
 			else    //  latti same -> can not use gps bearing method
@@ -1091,7 +1424,7 @@ namespace MyShop.iOS
 					if (myheading > 180 && myheading <= 270) dir = "The landmark is on your left behind";
 					if (myheading > 270 && myheading <= 360) dir = "The landmark is on your right behind";
 					*/
-					return "East" + "\n" + clockdirection(landmarkheading);
+                    return clockdirection(landmarkheading);
 				}
 				else //West
 				{
@@ -1102,7 +1435,7 @@ namespace MyShop.iOS
 					if (myheading > 180 && myheading <= 270) dir = "The landmark is on your right front";
 					if (myheading > 270 && myheading <= 360) dir = "The landmark is on your left front";
 					*/
-					return "West" +"\n"  + clockdirection(landmarkheading);
+                    return  clockdirection(landmarkheading);
 
 				}
 
@@ -1111,7 +1444,7 @@ namespace MyShop.iOS
 
 		string clockdirection(double landmarkheading)
 		{
-			string clock = "The landmark is at your ";
+			string clock = "to your ";
 
 			double diff = landmarkheading - myheading;
 			if (diff < 0) diff += 360;
@@ -1185,6 +1518,107 @@ namespace MyShop.iOS
             //if (diff > 280 && diff < 360) return "left front";
             return "";
         }
+
+        //public readonly List<CLLocationCoordinate2D> Locations;
+        //public readonly List<Google.Maps.Polyline> Lines;
+
+        void getRoutesToDestination(Marker destination){
+            SetDirectionsQuery(destination.Position);
+        }
+
+        private async void SetDirectionsQuery(CLLocationCoordinate2D destination)
+        {
+            //Clear Old Polylines
+            string KMdDirectionsUrl = @"http://maps.googleapis.com/maps/api/directions/json?origin=";
+            if (Lines.Count > 0)
+            {
+                foreach (var line in Lines)
+                {
+                    line.Map = null;
+                }
+                Lines.Clear();
+            }
+
+            //Start building Directions URL
+            var sb = new System.Text.StringBuilder();
+            sb.Append(KMdDirectionsUrl);
+            sb.Append(myposition.Coordinate.Latitude.ToString(CultureInfo.InvariantCulture));
+            sb.Append(",");
+            sb.Append(myposition.Coordinate.Longitude.ToString(CultureInfo.InvariantCulture));
+            sb.Append("&");
+            sb.Append("destination=");
+            sb.Append(destination.Latitude.ToString(CultureInfo.InvariantCulture));
+            sb.Append(",");
+            sb.Append(destination.Longitude.ToString(CultureInfo.InvariantCulture));
+            sb.Append("&mode=walking");
+            sb.Append("&sensor=true");
+
+            //If we have more than 2 locations we'll append waypoints
+            //if (Locations.Count > 2)
+            //{
+            //    sb.Append("&waypoints=");
+            //    for (var i = 2; i < Locations.Count; i++)
+            //    {
+            //        if (i > 2)
+            //            sb.Append("|");
+            //        sb.Append(Locations[i].Latitude.ToString(CultureInfo.InvariantCulture));
+            //        sb.Append(",");
+            //        sb.Append(Locations[i].Longitude.ToString(CultureInfo.InvariantCulture));
+            //    }
+            //}
+
+            //Get directions through Google Web Service
+            var directionsTask = GetDirections(sb.ToString());
+
+            var jSonData = await directionsTask;
+
+            //Deserialize string to object
+            var routes = JsonConvert.DeserializeObject<RootObject>(jSonData);
+
+            foreach (var route in routes.routes)
+            {
+                //Encode path from polyline passed back
+                var path = Google.Maps.Path.FromEncodedPath(route.overview_polyline.points);
+
+                //Create line from Path
+                var line = Google.Maps.Polyline.FromPath(path);
+                line.StrokeWidth = 10f;
+                line.StrokeColor = UIColor.Red;
+                line.Geodesic = true;
+
+                //Place line on map
+                line.Map = mapView;
+                Lines.Add(line);
+
+            }
+
+        }
+
+        private async Task<String> GetDirections(string url)
+        {
+            var client = new WebClient();
+            var directionsTask = client.DownloadStringTaskAsync(url);
+            var directions = await directionsTask;
+
+            return directions;
+
+        }
+
+        //--------------------------------TextToSpeech---------------------------------------------
+        void speak(string text)
+        {
+            //var speechSynthesizer = new AVSpeechSynthesizer();
+            var speechUtterance = new AVSpeechUtterance(text)
+            {
+                Rate = AVSpeechUtterance.MaximumSpeechRate/2,
+                Voice = AVSpeechSynthesisVoice.FromLanguage("en-US"),
+                Volume = 10f,
+                PitchMultiplier = 1.0f
+            };
+            if (speechSynthesizer.Speaking) speechSynthesizer.StopSpeaking(AVSpeechBoundary.Immediate);
+            speechSynthesizer.SpeakUtterance(speechUtterance);
+        }
+
 
 	}
 }

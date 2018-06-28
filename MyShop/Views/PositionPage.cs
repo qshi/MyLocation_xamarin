@@ -12,11 +12,17 @@ namespace MyShop
 
 
 		StoresViewModel ViewModel;
-
+        Store DestinationLandmark;
 		public PositionPage(StoresViewModel viewmodel)
 		{
 			ViewModel = viewmodel;
 		}
+
+        public PositionPage(StoresViewModel viewmodel, Store selectedStore)
+        {
+            ViewModel = viewmodel;
+            DestinationLandmark = selectedStore;
+        }
 
 		public PositionPage()
 		{
@@ -59,14 +65,31 @@ namespace MyShop
 			}
 
 		}
+
+        public Store Destination
+        {
+            get
+            {
+                if (DestinationLandmark != null)
+                {
+                    return DestinationLandmark;
+                }
+                return null;
+            }
+            set
+            {
+                if (DestinationLandmark != null)
+                    DestinationLandmark = value;
+            }
+        }
+
 		public async void Navigate(StorePage page)
 		{
 			await Navigation.PushAsync(page);
 			//await Navigation.PopAsync();
 		}
 
-
-
 	}
+
 }
 

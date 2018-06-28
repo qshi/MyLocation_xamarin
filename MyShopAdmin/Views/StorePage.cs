@@ -30,20 +30,20 @@ namespace MyShopAdmin
 			if (Store == null)
 			{
 				Store = new Store();
-				Store.MondayOpen = "9am";
-				Store.TuesdayOpen = "9am";
-				Store.WednesdayOpen = "9am";
-				Store.ThursdayOpen = "9am";
-				Store.FridayOpen = "9am";
-				Store.SaturdayOpen = "9am";
-				Store.SundayOpen = "12pm";
-				Store.MondayClose = "8pm";
-				Store.TuesdayClose = "8pm";
-				Store.WednesdayClose = "8pm";
-				Store.ThursdayClose = "8pm";
-				Store.FridayClose = "8pm";
-				Store.SaturdayClose = "8pm";
-				Store.SundayClose = "6pm";
+                Store.MondayOpen = "instructions";
+                Store.TuesdayOpen = "instructions";
+                Store.WednesdayOpen = "instructions";
+                Store.ThursdayOpen = "instructions";
+                Store.FridayOpen = "instructions";
+                Store.SaturdayOpen = "instructions";
+                Store.SundayOpen = "instructions";
+                Store.MondayClose = "instructions";
+                Store.TuesdayClose = "instructions";
+                Store.WednesdayClose = "instructions";
+                Store.ThursdayClose = "instructions";
+                Store.FridayClose = "instructions";
+                Store.SaturdayClose = "instructions";
+                Store.SundayClose = "instructions";
 				//Store.Name = "";
 				Store.LandmarksType = 1;
 				isNew = true;
@@ -82,7 +82,7 @@ namespace MyShopAdmin
 			version.Items.Add("Round About");
             version.Items.Add("Crosswalk");
 			version.Items.Add("Traffic Signal");
-			version.Items.Add("Others");
+            version.Items.Add("Knowles Engineering Building");
 			version.SelectedIndex = Store.LandmarksType;
 
 
@@ -108,20 +108,20 @@ namespace MyShopAdmin
 						var parse2 = double.TryParse(longitude.Text.Trim(), out lng);
 						Store.Longitude = lng;
 						Store.Latitude = lat;
-                        Store.MondayOpen = (mondayOpen == null)? "8am" : mondayOpen.Text.Trim();
-                        Store.MondayClose = (mondayClose == null) ? "5pm" : mondayClose.Text.Trim();
-                        Store.TuesdayOpen = (tuesdayOpen == null) ? "8am" : tuesdayOpen.Text.Trim();
-                        Store.TuesdayClose = (tuesdayClose == null) ? "5pm" : tuesdayClose.Text.Trim();
-                        Store.WednesdayOpen = (wednesdayOpen == null) ? "8am" : wednesdayOpen.Text.Trim();
-                        Store.WednesdayClose = (wednesdayClose == null) ? "5pm" : wednesdayClose.Text.Trim();
-                        Store.ThursdayOpen = (thursdayOpen == null) ? "8am" : thursdayOpen.Text.Trim();
-                        Store.ThursdayClose = (thursdayClose == null) ? "5pm" : thursdayClose.Text.Trim();
-                        Store.FridayOpen = (fridayOpen == null) ? "8am" : fridayOpen.Text.Trim();
-                        Store.FridayClose = (fridayClose == null) ? "5pm" : fridayClose.Text.Trim();
-                        Store.SaturdayOpen = (saturdayOpen == null) ? "8am" : saturdayOpen.Text.Trim();
-                        Store.SaturdayClose = (saturdayClose == null) ? "5pm" : saturdayClose.Text.Trim();
-                        Store.SundayOpen = (sundayOpen == null) ? "8am" : sundayOpen.Text.Trim();
-                        Store.SundayClose = (sundayClose == null) ? "5pm" : sundayClose.Text.Trim();
+                        Store.MondayOpen = (mondayOpen == null)? "instructions" : mondayOpen.Text.Trim();
+                    Store.MondayClose = (mondayClose == null) ? "instructions" : mondayClose.Text.Trim();
+                    Store.TuesdayOpen = (tuesdayOpen == null) ? "instructions" : tuesdayOpen.Text.Trim();
+                    Store.TuesdayClose = (tuesdayClose == null) ? "instructions" : tuesdayClose.Text.Trim();
+                    Store.WednesdayOpen = (wednesdayOpen == null) ? "instructions" : wednesdayOpen.Text.Trim();
+                    Store.WednesdayClose = (wednesdayClose == null) ? "instructions" : wednesdayClose.Text.Trim();
+                    Store.ThursdayOpen = (thursdayOpen == null) ? "instructions" : thursdayOpen.Text.Trim();
+                    Store.ThursdayClose = (thursdayClose == null) ? "instructions" : thursdayClose.Text.Trim();
+                    Store.FridayOpen = (fridayOpen == null) ? "instructions" : fridayOpen.Text.Trim();
+                    Store.FridayClose = (fridayClose == null) ? "instructions" : fridayClose.Text.Trim();
+                    Store.SaturdayOpen = (saturdayOpen == null) ? "instructions" : saturdayOpen.Text.Trim();
+                    Store.SaturdayClose = (saturdayClose == null) ? "instructions" : saturdayClose.Text.Trim();
+                    Store.SundayOpen = (sundayOpen == null) ? "instructions" : sundayOpen.Text.Trim();
+                    Store.SundayClose = (sundayClose == null) ? "instructions" : sundayClose.Text.Trim();
 
 						Store.LandmarksType = version.SelectedIndex;
 						Store.Landmarks = version.Items[version.SelectedIndex];
@@ -207,24 +207,37 @@ namespace MyShopAdmin
                             {
                                 Text="Scan iBeacon"
                             }),
-                        (phoneNumber = new EntryCell {Label = "Phone Number", Text = Store.PhoneNumber, Placeholder ="555-555-5555"})
-
+                        (phoneNumber = new EntryCell {Label = "Phone Number", Text = Store.PhoneNumber, Placeholder ="555-555-5555"}),
+                        (mondayOpen = new EntryCell {Label = "Nearby landamrk 1", Text = Store.MondayOpen}),
+                        (mondayClose = new EntryCell {Label = "Description 1", Text = Store.MondayClose}),
+                        (tuesdayOpen = new EntryCell {Label = "Nearby landamrk 2", Text = Store.TuesdayOpen}),
+                        (tuesdayClose = new EntryCell {Label = "Description 2", Text = Store.TuesdayClose}),
+                        (wednesdayOpen = new EntryCell {Label = "Nearby landamrk 3", Text = Store.WednesdayOpen}),
+                        (wednesdayClose = new EntryCell {Label = "Description 3", Text = Store.WednesdayClose}),
+                        (thursdayOpen = new EntryCell {Label = "Nearby landamrk 4", Text = Store.ThursdayOpen}),
+                        (thursdayClose = new EntryCell {Label = "Description 4", Text = Store.ThursdayClose}),
+                        (fridayOpen = new EntryCell {Label = "Nearby landamrk 5", Text = Store.FridayOpen}),
+                        (fridayClose = new EntryCell {Label = "Description 5", Text = Store.FridayClose}),
+                        (saturdayOpen = new EntryCell {Label = "Nearby landamrk 6", Text = Store.SaturdayOpen}),
+                        (saturdayClose =new EntryCell {Label = "Description 6", Text = Store.SaturdayClose}),
+                        (sundayOpen = new EntryCell {Label = "Nearby landamrk 7", Text = Store.SundayOpen}),
+                        (sundayClose = new EntryCell {Label = "Description 7", Text = Store.SundayClose}),
                     },
 					//new TableSection ("Hours") {
-					//	(mondayOpen = new EntryCell {Label = "Monday Open", Text = Store.MondayOpen}),
-					//	(mondayClose = new EntryCell {Label = "Monday Close", Text = Store.MondayClose}),
-					//	(tuesdayOpen = new EntryCell {Label = "Tuesday Open", Text = Store.TuesdayOpen}),
-					//	(tuesdayClose = new EntryCell {Label = "Tuesday Close", Text = Store.TuesdayClose}),
-					//	(wednesdayOpen = new EntryCell {Label = "Wedneday Open", Text = Store.WednesdayOpen}),
-					//	(wednesdayClose = new EntryCell {Label = "Wedneday Close", Text = Store.WednesdayClose}),
-					//	(thursdayOpen = new EntryCell {Label = "Thursday Open", Text = Store.ThursdayOpen}),
-					//	(thursdayClose = new EntryCell {Label = "Thursday Close", Text = Store.ThursdayClose}),
-					//	(fridayOpen = new EntryCell {Label = "Friday Open", Text = Store.FridayOpen}),
-					//	(fridayClose = new EntryCell {Label = "Friday Close", Text = Store.FridayClose}),
-					//	(saturdayOpen = new EntryCell {Label = "Saturday Open", Text = Store.SaturdayOpen}),
-					//	(saturdayClose =new EntryCell {Label = "Saturday Close", Text = Store.SaturdayClose}),
-					//	(sundayOpen = new EntryCell {Label = "Sunday Open", Text = Store.SundayOpen}),
-					//	(sundayClose = new EntryCell {Label = "Sunday Close", Text = Store.SundayClose}),
+						//(mondayOpen = new EntryCell {Label = "Monday Open", Text = Store.MondayOpen}),
+						//(mondayClose = new EntryCell {Label = "Monday Close", Text = Store.MondayClose}),
+						//(tuesdayOpen = new EntryCell {Label = "Tuesday Open", Text = Store.TuesdayOpen}),
+						//(tuesdayClose = new EntryCell {Label = "Tuesday Close", Text = Store.TuesdayClose}),
+						//(wednesdayOpen = new EntryCell {Label = "Wedneday Open", Text = Store.WednesdayOpen}),
+						//(wednesdayClose = new EntryCell {Label = "Wedneday Close", Text = Store.WednesdayClose}),
+						//(thursdayOpen = new EntryCell {Label = "Thursday Open", Text = Store.ThursdayOpen}),
+						//(thursdayClose = new EntryCell {Label = "Thursday Close", Text = Store.ThursdayClose}),
+						//(fridayOpen = new EntryCell {Label = "Friday Open", Text = Store.FridayOpen}),
+						//(fridayClose = new EntryCell {Label = "Friday Close", Text = Store.FridayClose}),
+						//(saturdayOpen = new EntryCell {Label = "Saturday Open", Text = Store.SaturdayOpen}),
+						//(saturdayClose =new EntryCell {Label = "Saturday Close", Text = Store.SaturdayClose}),
+						//(sundayOpen = new EntryCell {Label = "Sunday Open", Text = Store.SundayOpen}),
+						//(sundayClose = new EntryCell {Label = "Sunday Close", Text = Store.SundayClose}),
 					//},
 				},
 			};

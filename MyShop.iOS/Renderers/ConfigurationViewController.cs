@@ -62,11 +62,12 @@ namespace MyShop.iOS
 			{
 			  Frame = new CGRect(100, 10, 300, 30)
 			};
+
 			majorLabel = new UILabel(new CGRect(10, 95, 50, 30));
-			majorLabel.Text = "Major";
+			majorLabel.Text = "Phone";
 			majorTextField = new UITextField()
 			{
-			  Text = "999",
+			  Text = "",
 			  Frame = new CGRect(100, 95, 250, 30),
               BorderStyle = UITextBorderStyle.RoundedRect,
               AllowsEditingTextAttributes = false   
@@ -102,13 +103,13 @@ namespace MyShop.iOS
 			TableView.InsertSubview(enbleLabel,1);
 			TableView.InsertSubview(majorLabel,3);
             TableView.InsertSubview(measuredPoweLabel,5);
-			TableView.InsertSubview(minorLabel,4);
+			//TableView.InsertSubview(minorLabel,4);
 			TableView.InsertSubview(uuidTextLabel,2);
 
 			TableView.InsertSubview(enabledSwitch,1);
 			TableView.InsertSubview(majorTextField,3);
 			TableView.InsertSubview(measuredPowerTextField,5);
-			TableView.InsertSubview(minorTextField,4);
+			//TableView.InsertSubview(minorTextField,4);
 			TableView.InsertSubview(uuidTextField,2);
 
 			enabledSwitch.ValueChanged += (sender, e) => {
@@ -162,7 +163,6 @@ namespace MyShop.iOS
 				peripheralManager.StopAdvertising();
 			};
 
-
 			doneButton = UIButton.FromType(UIButtonType.RoundedRect);
             doneButton.Frame = new CGRect(160, 230, 140, 40);
             doneButton.SetTitle("Done", UIControlState.Normal);
@@ -190,7 +190,10 @@ namespace MyShop.iOS
 
 				if (enabled)
 				{
-					CLBeaconRegion region = Helpers.CreateRegion(uuid, major, minor);
+                    NSNumber getminor = major.Int64Value % 100000;
+                    NSNumber getmajor = major.Int64Value / 100000;
+
+                    CLBeaconRegion region = Helpers.CreateRegion(uuid, getmajor, getminor);
 					if (region != null)
 						peripheralManager.StartAdvertising(region.GetPeripheralData(power));
                     View.Add(stopButton);

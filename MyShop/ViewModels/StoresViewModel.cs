@@ -35,7 +35,8 @@ namespace MyShop
 
 				if (ItemSelected == null)
 				{
-					page.Navigation.PushAsync(new StorePage(selectedStore));
+                    page.Navigation.PushAsync(new PositionPage(this,selectedStore));
+                    //page.Navigation.PushAsync(new StorePage(selectedStore));
 					SelectedStore = null;
 				}
 				else

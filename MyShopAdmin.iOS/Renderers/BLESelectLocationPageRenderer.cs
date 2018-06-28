@@ -52,10 +52,39 @@ namespace MyShopAdmin.iOS
 		{
 			base.LoadView();
 
-			CameraPosition camera = CameraPosition.FromCamera(latitude: 42.392262,
-														  longitude: -72.526992,
-														  zoom: 17);
-			mapView = MapView.FromCamera(CGRect.Empty, camera);
+
+            var southWestc = new CLLocationCoordinate2D(42.393233, -72.529333);
+            var northEastc = new CLLocationCoordinate2D(42.393286, -72.528560);
+
+            var southWest = new CLLocationCoordinate2D(42.393339, -72.529333);
+            var northEast = new CLLocationCoordinate2D(42.393160, -72.528610);
+            var overlayBounds = new CoordinateBounds(southWest, northEast);
+
+            // Choose the midpoint of the coordinate to focus the camera on.
+            //var campus = GeometryUtils.Interpolate(southWestc, northEastc, 0.5);
+            var campus = new CLLocationCoordinate2D(42.393166, -72.529080);
+            var camera = CameraPosition.FromCamera(campus, 17, 0, 0);
+
+
+            //var camera = CameraPosition.FromCamera (42.39181938, -72.52662,17);
+            mapView = MapView.FromCamera(CGRect.Empty, camera);
+            var groundOverlay = new GroundOverlay()
+            {
+                Icon = UIImage.FromBundle("knowles.png"),
+                Position = campus,
+                Bearing = 336,
+                Bounds = overlayBounds,
+
+                Map = mapView
+
+            };
+
+
+
+			//CameraPosition camera = CameraPosition.FromCamera(latitude: 42.392262,
+			//											  longitude: -72.526992,
+			//											  zoom: 17);
+			//mapView = MapView.FromCamera(CGRect.Empty, camera);
 			mapView.MyLocationEnabled = true;
 
 			View = mapView;

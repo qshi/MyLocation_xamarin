@@ -16,11 +16,14 @@ namespace BleIosExample.BLE
 		public event EventHandler BeaconBroadcastEvent;
 
 		private const string Uuid = "401EE3FD-6F9F-4500-8F47-A99D25C66412";
+        private const string virtualUuid = "11111111-1111-1111-1111-111111111111";
 
 		private string BeaconId = "BleTags";
 		private CLLocationManager _locationManager;
 		private bool _serviceStarted;
 		private readonly CLBeaconRegion _beaconRegion;
+
+        private readonly CLBeaconRegion _virtualBeaconRegion;
 
 		public BeaconRecieverManager_IOS()
 		{
@@ -33,6 +36,13 @@ namespace BleIosExample.BLE
 				NotifyOnEntry = true,
 				NotifyOnExit = true
 			};
+
+            _virtualBeaconRegion = new CLBeaconRegion(new NSUuid(virtualUuid), "virtualBleTags")
+            {
+                NotifyEntryStateOnDisplay = true,
+                NotifyOnEntry = true,
+                NotifyOnExit = true
+            };
 
 		}
 
@@ -57,6 +67,8 @@ namespace BleIosExample.BLE
 
 			_locationManager.StartMonitoring(_beaconRegion);
 			_locationManager.StartRangingBeacons(_beaconRegion);
+            _locationManager.StartMonitoring(_virtualBeaconRegion);
+            _locationManager.StartRangingBeacons(_virtualBeaconRegion);
 			_serviceStarted = true;
 		}
 
@@ -77,6 +89,8 @@ namespace BleIosExample.BLE
 
 			_locationManager.StopMonitoring(_beaconRegion);
 			_locationManager.StopRangingBeacons(_beaconRegion);
+            _locationManager.StopMonitoring(_virtualBeaconRegion);
+            _locationManager.StopRangingBeacons(_virtualBeaconRegion);
 
 			_locationManager = null;
 

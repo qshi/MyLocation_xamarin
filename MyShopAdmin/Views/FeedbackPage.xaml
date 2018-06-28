@@ -85,7 +85,7 @@
                 <x:String>Round about</x:String>
                 <x:String>Traffic Signal</x:String>
 	            <x:String>Crosswalk</x:String>
-	            <x:String>Other</x:String>
+	            <x:String>Knowles Engineering Building</x:String>
       </Picker.Items>
         </Picker>
 

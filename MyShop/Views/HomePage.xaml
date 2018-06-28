@@ -29,7 +29,7 @@
 				BackgroundColor="#3498DB"
 				BorderRadius="0"
 				TextColor="White" 
-				Text="Landmarks"/>
+				Text="Navigation"/>
 			<Button 
 				x:Name="ButtonLeaveFeedback"
 				Grid.Row="1"
@@ -37,7 +37,7 @@
 				BackgroundColor="#81C134" 
 				BorderRadius="0"
 				TextColor="White"
-				Text="Report"/>
+				Text=""/>
 			<Button 
 				x:Name="MyPosition"
 				Grid.Row="1"

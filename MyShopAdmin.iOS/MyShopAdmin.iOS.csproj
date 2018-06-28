@@ -211,6 +211,7 @@
     <BundleResource Include="Resources\phone%402x.png" />
     <BundleResource Include="Resources\phone%403x.png" />
     <BundleResource Include="Resources\umassnavi.jpg" />
+    <BundleResource Include="Resources\knowles.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

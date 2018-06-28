@@ -73,8 +73,8 @@
                                              Padding="8"
                                              Spacing="4"
                                              VerticalOptions="Center">
-                                    <Label Text="{Binding StreetAddress}" FontSize="Medium"  TextColor="#3498DB" LineBreakMode="NoWrap"/>
-                                    <Label Text="{Binding LocationCode}" FontSize="Small" LineBreakMode="WordWrap"/>
+                                    <Label Text="{Binding StreetAddress}" FontSize="Medium"  AutomationProperties.Name ="{Binding StreetAddress}" TextColor="#3498DB" LineBreakMode="NoWrap"/>
+                                    <Label Text="{Binding LocationCode}" FontSize="Small" AutomationProperties.IsInAccessibleTree="false" LineBreakMode="WordWrap"/>
                                 </StackLayout>
                             </Grid>
                         </ViewCell>

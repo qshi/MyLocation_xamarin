@@ -12,9 +12,9 @@ namespace MyShop.iOS
 		static Defaults ()
 		{
 			supportedProximityUuids = new NSUuid [] {
-				new NSUuid ("401EE3FD-6F9F-4500-8F47-A99D25C66412"),
-				new NSUuid ("5A4BCFCE-174E-4BAC-A814-092E77F6B7E5"),
-				new NSUuid ("74278BDA-B644-4520-8F0C-720EAF059935")
+				//new NSUuid ("401EE3FD-6F9F-4500-8F47-A99D25C66412"),
+                new NSUuid ("11111111-1111-1111-1111-111111111111")
+				//new NSUuid ("74278BDA-B644-4520-8F0C-720EAF059935")
 			};
 			defaultPower = new NSNumber (-59);
 		}

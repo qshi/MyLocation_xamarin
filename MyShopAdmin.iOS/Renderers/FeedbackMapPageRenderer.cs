@@ -78,7 +78,7 @@ namespace MyShopAdmin.iOS
             landmarktypes.Add("Bus Stop");
             landmarktypes.Add("Round About");
             landmarktypes.Add("Crosswalk");
-            landmarktypes.Add("Others");
+            landmarktypes.Add("Knowles Engineering Building");
 
 
 			foreach (var feedback in _feedbackMapPage.Feedbacks)

@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Admin App</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.refractored.positionadmin</string>
+	<string>positionadmin</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -62,5 +62,9 @@
 	<true/>
 	<key>CFBundleName</key>
 	<string>Admin App</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 </dict>
 </plist>

@@ -7,7 +7,7 @@ namespace MyShop
 	{
 		public HomeViewModel(Page page) : base(page)
 		{
-			Title = "Volunteer App";
+			Title = "BVI User App";
 		}
 
 
